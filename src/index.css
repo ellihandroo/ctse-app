@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 @theme {
-  /* Brand Colors */
-  --color-primary: #00a86b;
-  --color-primary-hover: #009960;
-  --color-primary-light: #e6f7f1;
+  /* Brand Colors — matches CTSE logo #38B380 */
+  --color-primary: #38B380;
+  --color-primary-hover: #2D9A6B;
+  --color-primary-light: #EBF7F2;
 
   /* Light mode base */
   --color-background: #ffffff;

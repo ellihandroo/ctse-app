@@ -30,14 +30,11 @@ export default function Navbar() {
     <nav className="h-16 bg-white border-b border-border px-4 flex items-center justify-between sticky top-0 z-40">
       {/* Left: Logo + FSCA */}
       <div className="flex items-center gap-3">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-sm">CT</span>
-          </div>
-          <span className="text-lg font-semibold text-text-primary hidden sm:block">
-            CTSE
-          </span>
-        </div>
+        <img
+          src="/ctse-wordmark.svg"
+          alt="CTSE"
+          className="h-6 sm:h-7"
+        />
         <Badge variant="primary" className="hidden sm:flex">
           <Shield className="w-3 h-3 mr-1" />
           FSCA Regulated

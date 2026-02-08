@@ -25,12 +25,11 @@ export default function Login() {
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
       {/* Logo + Tagline */}
       <div className="text-center mb-8">
-        <div className="flex items-center justify-center gap-3 mb-4">
-          <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center">
-            <span className="text-white font-bold text-xl">CT</span>
-          </div>
-          <h1 className="text-3xl font-bold text-text-primary">CTSE</h1>
-        </div>
+        <img
+          src="/ctse-full-logo.svg"
+          alt="Cape Town Stock Exchange"
+          className="h-20 sm:h-24 mx-auto mb-4"
+        />
         <p className="text-lg text-text-secondary mb-2">
           The Everything Exchange
         </p>
