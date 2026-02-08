@@ -1,0 +1,58 @@
+export const predictions = [
+  {
+    id: 'rand-july-2026',
+    title: 'Rand stronger than R18.50/USD on 1 July 2026?',
+    assetType: 'prediction',
+    category: 'Economics',
+    description:
+      'Will the South African Rand be trading below R18.50 per US Dollar at market close on July 1st, 2026?',
+    expiryDate: '2026-07-01',
+    yesPrice: 0.34,
+    noPrice: 0.66,
+    volume24h: 2450000,
+    totalVolume: 18500000,
+    liquidity: 5200000,
+  },
+  {
+    id: 'loadshedding-2026',
+    title: '100 days without loadshedding by Dec 2026?',
+    assetType: 'prediction',
+    category: 'Politics',
+    description:
+      'Will South Africa achieve 100 consecutive days without loadshedding before December 31st, 2026?',
+    expiryDate: '2026-12-31',
+    yesPrice: 0.12,
+    noPrice: 0.88,
+    volume24h: 890000,
+    totalVolume: 8900000,
+    liquidity: 2100000,
+  },
+  {
+    id: 'sarb-may-2026',
+    title: 'SARB to cut repo rate at May 2026 MPC?',
+    assetType: 'prediction',
+    category: 'Economics',
+    description:
+      'Will the South African Reserve Bank announce a repo rate cut at the May 2026 Monetary Policy Committee meeting?',
+    expiryDate: '2026-05-21',
+    yesPrice: 0.58,
+    noPrice: 0.42,
+    volume24h: 1200000,
+    totalVolume: 6700000,
+    liquidity: 1800000,
+  },
+  {
+    id: 'springboks-rc-2026',
+    title: 'Springboks to win 2026 Rugby Championship?',
+    assetType: 'prediction',
+    category: 'Sports',
+    description:
+      'Will the South African Springboks win the 2026 Rugby Championship?',
+    expiryDate: '2026-10-05',
+    yesPrice: 0.45,
+    noPrice: 0.55,
+    volume24h: 3400000,
+    totalVolume: 24000000,
+    liquidity: 6500000,
+  },
+]
