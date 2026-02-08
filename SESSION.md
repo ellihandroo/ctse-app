@@ -6,28 +6,23 @@
 2026-02-08
 
 ## Current Branch
-`feature/phase-2-marketplace` (committed, 3 commits ahead of main)
+`feature/phase-3-trading-wallet` (committed, ready to merge)
 
 ## What Was Done
-- Completed Phase 2: Core Screens
-- Marketplace: FilterTabs, SearchBar, AssetCard grid (all 5 asset types)
-- Dashboard: PortfolioValue, PortfolioChart (Recharts donut), AssetList, RecentActivity
-- Asset Detail: 5 variant pages (Equity, Tokenized, Crypto, Prediction, Futures)
-- Shared asset components: AssetHeader, PriceChartPlaceholder, StatsGrid
-- allAssets.js unified lookup helper
-- Brand logos integrated (full logo on Login, wordmark in Navbar, CT mark as favicon)
-- Brand color updated to #38B380 to match logo
+- Completed Phase 3: Trading & Wallet
+- Trade page: dark mode, 3-panel layout (order book, chart, order form)
+- Wallet: dual structure (Broker + Spend) with balances, income, transactions
+- Earn: stablecoin yield cards with APY, TVL, backing, user earnings summary
+- Spend Card: virtual card with CTSE branding, freeze toggle, transactions
+- My Assets: personal tokenized properties with collateral modals
 
 ## Immediate Next Steps
-1. Merge Phase 2 branch to main
-2. Start **Phase 3: Trading & Wallet**
-3. Build Trade/Order book interface first
-4. Then Wallet, Spend Card, My Assets, Earn
-
-## Key Context
-- 22 assets total across all types (5 equities, 4 tokenized, 6 crypto, 4 predictions, 3 futures)
-- Recharts adds ~400KB to bundle — code-split in Phase 4
-- PriceChartPlaceholder uses enlarged Sparkline — swap for TradingView lightweight-charts in Phase 3
+1. Merge Phase 3 to main
+2. Start Phase 4: Polish
+3. Corporate Actions + Settings
+4. Responsive fixes, transitions
+5. Deploy to Vercel
 
 ## Open Issues / Blockers
-- None currently
+- Bundle size warning (681KB JS) — need code-split in Phase 4
+- Trade chart is still sparkline placeholder — swap for lightweight-charts
