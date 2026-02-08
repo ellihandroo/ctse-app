@@ -2,6 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react'
 import { findAssetById } from '../data/allAssets'
 import Button from '../components/common/Button'
+import TradeWidget from '../components/asset/TradeWidget'
 import EquityDetail from '../components/asset/EquityDetail'
 import TokenizedDetail from '../components/asset/TokenizedDetail'
 import PredictionDetail from '../components/asset/PredictionDetail'
@@ -35,17 +36,29 @@ export default function AssetDetail() {
   const DetailComponent = detailComponents[asset.assetType] || EquityDetail
 
   return (
-    <div className="space-y-6 max-w-4xl">
+    <div className="max-w-6xl">
       {/* Back button */}
       <button
         onClick={() => navigate(-1)}
-        className="flex items-center gap-1.5 text-sm text-text-secondary hover:text-text-primary transition-colors"
+        className="flex items-center gap-1.5 text-sm text-text-secondary hover:text-text-primary transition-colors mb-6"
       >
         <ArrowLeft className="w-4 h-4" />
         Back
       </button>
 
-      <DetailComponent asset={asset} />
+      <div className="lg:flex lg:gap-6">
+        {/* Left column — asset details */}
+        <div className="flex-1 min-w-0">
+          <DetailComponent asset={asset} />
+        </div>
+
+        {/* Right column — sticky trade widget */}
+        <div className="w-full lg:w-[360px] lg:flex-shrink-0 mt-6 lg:mt-0">
+          <div className="sticky" style={{ top: '6.5rem' }}>
+            <TradeWidget asset={asset} />
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
