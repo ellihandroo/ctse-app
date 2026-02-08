@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-**Phase 3: Trading & Wallet** (Complete)
+**Phase 4: Polish** (Complete) — Ready to deploy
 
 ## Milestones
 
@@ -20,25 +20,23 @@
 | Wallet + Spend Card    | Complete | 2026-02-08 |
 | Earn page              | Complete | 2026-02-08 |
 | My Assets              | Complete | 2026-02-08 |
-| Corporate Actions      | Pending  | -          |
-| Settings (full)        | Pending  | -          |
-| Deploy to Vercel       | Pending  | -          |
+| Corporate Actions      | Complete | 2026-02-08 |
+| Settings               | Complete | 2026-02-08 |
+| Deploy to Vercel       | Ready    | -          |
 
-## Key Decisions
+## Build Stats
 
-| Decision | Choice | Reason | Date |
-| -------- | ------ | ------ | ---- |
-| Framework | React 19 + Vite 7 | Latest stable | 2026-02-08 |
-| Styling | TailwindCSS v4 (CSS @theme) | No config file needed | 2026-02-08 |
-| Brand color | #38B380 (matches logo) | Softer green, institutional feel | 2026-02-08 |
-| Chain | Solana-only | Simplify POC | 2026-02-08 |
-| Dark mode | Trade screen only (auto-toggle) | Light = credibility | 2026-02-08 |
+- Production build: 3 chunks, no warnings
+- Vendor (React): 47KB gzip
+- App code: 79KB gzip
+- Recharts: 102KB gzip (lazy loaded)
+- CSS: 6KB gzip
+- Total: ~234KB gzip
 
-## Next: Phase 4 — Polish
+## Deploy Checklist
 
-1. Corporate Actions (votes + announcements)
-2. Settings (full preferences)
-3. Responsive design fixes
-4. Loading states and transitions
-5. Code-split Recharts (bundle optimization)
-6. Deploy to Vercel
+- [ ] Push to GitHub
+- [ ] Connect to Vercel
+- [ ] Add custom domain: ctse.app
+- [ ] Verify HTTPS
+- [ ] Test on mobile
