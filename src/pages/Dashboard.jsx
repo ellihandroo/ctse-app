@@ -1,12 +1,20 @@
+import { useNavigate } from 'react-router-dom'
+import { ArrowDownLeft, Send, TrendingUp } from 'lucide-react'
 import { useUser } from '../context/UserContext'
-import { formatZAR } from '../utils/formatters'
-import Card from '../components/common/Card'
+import PortfolioValue from '../components/dashboard/PortfolioValue'
+import PortfolioChart from '../components/dashboard/PortfolioChart'
+import AssetList from '../components/dashboard/AssetList'
+import RecentActivity from '../components/dashboard/RecentActivity'
+import Button from '../components/common/Button'
+import { portfolioBreakdown, holdings, recentActivity } from '../data/portfolio'
 
 export default function Dashboard() {
   const { user } = useUser()
+  const navigate = useNavigate()
 
   return (
     <div className="space-y-6">
+      {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-text-primary">
           Welcome back, {user?.name?.split(' ')[0]}
@@ -16,33 +24,37 @@ export default function Dashboard() {
         </p>
       </div>
 
-      <Card>
-        <p className="text-sm text-text-secondary mb-1">Total Portfolio Value</p>
-        <p className="text-3xl font-bold font-mono text-text-primary">
-          {formatZAR(user?.portfolioValue || 0)}
-        </p>
-        <p className="text-sm text-success font-medium mt-1">+R12,450 (+1.5%) today</p>
-      </Card>
+      {/* Portfolio Value */}
+      <PortfolioValue totalValue={user?.portfolioValue || 847500} />
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="text-center">
-          <p className="text-sm text-text-secondary">Equities</p>
-          <p className="text-xl font-bold font-mono mt-1">R340,000</p>
-        </Card>
-        <Card className="text-center">
-          <p className="text-sm text-text-secondary">Crypto</p>
-          <p className="text-xl font-bold font-mono mt-1">R285,000</p>
-        </Card>
-        <Card className="text-center">
-          <p className="text-sm text-text-secondary">Tokenized</p>
-          <p className="text-xl font-bold font-mono mt-1">R222,500</p>
-        </Card>
+      {/* Quick Actions */}
+      <div className="flex gap-3">
+        <Button variant="primary" size="sm">
+          <ArrowDownLeft className="w-4 h-4" />
+          Deposit
+        </Button>
+        <Button variant="secondary" size="sm">
+          <Send className="w-4 h-4" />
+          Send
+        </Button>
+        <Button
+          variant="secondary"
+          size="sm"
+          onClick={() => navigate('/marketplace')}
+        >
+          <TrendingUp className="w-4 h-4" />
+          Trade
+        </Button>
       </div>
 
-      <Card>
-        <h2 className="text-lg font-semibold text-text-primary mb-3">Recent Activity</h2>
-        <p className="text-sm text-text-muted">Full dashboard coming in Phase 2...</p>
-      </Card>
+      {/* Charts + Activity grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <PortfolioChart data={portfolioBreakdown} />
+        <RecentActivity activities={recentActivity} />
+      </div>
+
+      {/* Holdings */}
+      <AssetList holdings={holdings} />
     </div>
   )
 }
