@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-**Phase 4: Polish** (Complete) — Ready to deploy
+**Phase 4: Polish** (Complete) — Deployed to https://ctse.app
 
 ## Milestones
 
@@ -22,7 +22,7 @@
 | My Assets              | Complete | 2026-02-08 |
 | Corporate Actions      | Complete | 2026-02-08 |
 | Settings               | Complete | 2026-02-08 |
-| Deploy to Vercel       | Ready    | -          |
+| Deploy to Vercel       | Complete | 2026-02-08 |
 
 ## Build Stats
 
@@ -35,8 +35,8 @@
 
 ## Deploy Checklist
 
-- [ ] Push to GitHub
-- [ ] Connect to Vercel
-- [ ] Add custom domain: ctse.app
-- [ ] Verify HTTPS
+- [x] Push to GitHub
+- [x] Connect to Vercel
+- [x] Add custom domain: ctse.app (via Vercel nameservers on GoDaddy)
+- [x] Verify HTTPS (SSL auto-provisioned by Vercel)
 - [ ] Test on mobile
