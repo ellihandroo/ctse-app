@@ -1,0 +1,26 @@
+export const personalAssets = [
+  {
+    id: 'maple-23',
+    symbol: 'MAPLE-23',
+    name: '23 Maple Street, Constantia',
+    type: 'Residential Property',
+    location: 'Constantia, Cape Town',
+    equity: 4200000,
+    tokenized: true,
+    chain: 'Solana',
+    ltv: 50,
+    borrowingPower: 2100000,
+  },
+  {
+    id: 'unit-12b',
+    symbol: 'UNIT-12B',
+    name: 'Unit 12B, The Waterclub',
+    type: 'Investment Property',
+    location: 'Granger Bay, Cape Town',
+    equity: 2800000,
+    tokenized: true,
+    chain: 'Solana',
+    ltv: 45,
+    borrowingPower: 1260000,
+  },
+]
