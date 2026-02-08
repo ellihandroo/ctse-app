@@ -80,3 +80,8 @@ body {
 .animate-fade-in {
   animation: fadeIn 0.3s ease-out;
 }
+
+/* Hide TradingView attribution logo on lightweight-charts */
+#tv-attr-logo {
+  display: none !important;
+}

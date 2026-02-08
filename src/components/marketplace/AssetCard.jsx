@@ -1,10 +1,17 @@
 import { useNavigate } from 'react-router-dom'
-import { Clock } from 'lucide-react'
+import { Clock, Timer, Users } from 'lucide-react'
 import Card from '../common/Card'
 import Badge from '../common/Badge'
 import PriceChange from '../common/PriceChange'
 import Sparkline from '../common/Sparkline'
-import { formatZAR, formatAPY, formatCompact } from '../../utils/formatters'
+import { formatZAR, formatAPY, formatCompact, formatNumber } from '../../utils/formatters'
+
+function daysUntil(dateStr) {
+  const now = new Date()
+  const target = new Date(dateStr)
+  const diff = target - now
+  return Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)))
+}
 
 const typeConfig = {
   equity: { label: 'Equity', variant: 'neutral' },
@@ -80,12 +87,26 @@ export default function AssetCard({ asset }) {
             {symbol && (
               <span className="text-xs text-text-muted font-mono">{symbol}</span>
             )}
-            <Badge variant={config.variant}>{config.label}</Badge>
-            {asset.assetType === 'crypto' && !asset.isStablecoin && (
-              <span className="flex items-center gap-0.5 text-xs text-text-muted">
-                <Clock className="w-3 h-3" />
-                24/7
-              </span>
+            {isPrediction ? (
+              <>
+                <Badge variant="warning">{asset.category}</Badge>
+                <span className="flex items-center gap-0.5 text-xs text-text-muted">
+                  <Timer className="w-3 h-3" />
+                  {daysUntil(asset.expiryDate) > 0
+                    ? `${daysUntil(asset.expiryDate)}d left`
+                    : 'Expired'}
+                </span>
+              </>
+            ) : (
+              <>
+                <Badge variant={config.variant}>{config.label}</Badge>
+                {asset.assetType === 'crypto' && !asset.isStablecoin && (
+                  <span className="flex items-center gap-0.5 text-xs text-text-muted">
+                    <Clock className="w-3 h-3" />
+                    24/7
+                  </span>
+                )}
+              </>
             )}
           </div>
         </div>
@@ -109,8 +130,11 @@ export default function AssetCard({ asset }) {
             />
           </div>
           <div className="flex justify-between text-xs text-text-muted">
-            <span>Vol: {formatCompact(volume)}</span>
-            <span>Expires {new Date(asset.expiryDate).toLocaleDateString('en-ZA', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+            <span className="flex items-center gap-1">
+              <Users className="w-3 h-3" />
+              {formatNumber(asset.traders || 0)} traders
+            </span>
+            <span>Vol {formatCompact(volume)}</span>
           </div>
         </div>
       ) : (

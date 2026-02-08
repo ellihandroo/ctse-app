@@ -4,7 +4,7 @@ import Sparkline from '../common/Sparkline'
 
 const timeframes = ['1D', '1W', '1M', '3M', '1Y']
 
-export default function PriceChartPlaceholder({ data = [], height = 200 }) {
+export default function PriceChartPlaceholder({ data = [], height = 280 }) {
   const [active, setActive] = useState('1M')
 
   return (

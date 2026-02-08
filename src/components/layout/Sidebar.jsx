@@ -3,7 +3,6 @@ import { useState, useRef, useEffect } from 'react'
 import {
   Wallet,
   CreditCard,
-  Settings,
   TrendingUp,
   Landmark,
   PiggyBank,
@@ -19,7 +18,6 @@ const navItems = [
   { to: '/earn', label: 'Earn', icon: PiggyBank },
   { to: '/card', label: 'Spend Card', icon: CreditCard },
   { to: '/corporate', label: 'Corporate', icon: Landmark },
-  { to: '/settings', label: 'Settings', icon: Settings },
 ]
 
 export default function Sidebar() {

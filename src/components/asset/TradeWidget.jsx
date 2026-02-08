@@ -147,27 +147,88 @@ function FuturesWidget({ asset }) {
 }
 
 function PredictionWidget({ asset }) {
-  const yesPercent = (asset.yesPrice * 100).toFixed(0)
-  const noPercent = (asset.noPrice * 100).toFixed(0)
+  const [side, setSide] = useState('yes')
+  const [amount, setAmount] = useState('')
+
+  const price = side === 'yes' ? asset.yesPrice : asset.noPrice
+  const priceInCents = (price * 100).toFixed(0)
+  const amountNum = parseFloat(amount) || 0
+  const estShares = amountNum > 0 ? Math.floor(amountNum / price) : 0
+  const potentialPayout = estShares * 1
 
   return (
     <>
-      <p className="text-sm text-text-secondary mb-4 leading-relaxed">
-        Buy shares based on your prediction
-      </p>
-
-      <div className="space-y-3">
-        <Button variant="success" size="lg" className="w-full justify-between">
-          <span>Buy YES</span>
-          <span className="font-mono">{yesPercent}c</span>
-        </Button>
-        <Button variant="danger" size="lg" className="w-full justify-between">
-          <span>Buy NO</span>
-          <span className="font-mono">{noPercent}c</span>
-        </Button>
+      {/* YES / NO toggle */}
+      <div className="flex rounded-lg bg-gray-100 p-1 mb-4">
+        <button
+          onClick={() => setSide('yes')}
+          className={`flex-1 py-2 text-sm font-medium rounded-md transition-colors ${
+            side === 'yes'
+              ? 'bg-success text-white shadow-sm'
+              : 'text-text-secondary hover:text-text-primary'
+          }`}
+        >
+          YES {(asset.yesPrice * 100).toFixed(0)}c
+        </button>
+        <button
+          onClick={() => setSide('no')}
+          className={`flex-1 py-2 text-sm font-medium rounded-md transition-colors ${
+            side === 'no'
+              ? 'bg-error text-white shadow-sm'
+              : 'text-text-secondary hover:text-text-primary'
+          }`}
+        >
+          NO {(asset.noPrice * 100).toFixed(0)}c
+        </button>
       </div>
 
-      <p className="text-xs text-text-muted mt-4 text-center">
+      {/* Amount input */}
+      <div className="mb-4">
+        <label className="block text-xs text-text-muted mb-1.5">
+          Amount (ZAR)
+        </label>
+        <input
+          type="number"
+          placeholder="0.00"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          className="w-full px-3 py-2.5 border border-border rounded-lg text-sm font-mono bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+        />
+      </div>
+
+      {/* Est. shares */}
+      <div className="flex justify-between text-sm mb-4 px-1">
+        <span className="text-text-muted">Est. shares</span>
+        <span className="font-mono font-medium text-text-primary">
+          {estShares.toLocaleString()}
+        </span>
+      </div>
+
+      {/* Share price */}
+      <div className="flex justify-between text-sm mb-4 px-1">
+        <span className="text-text-muted">Share price</span>
+        <span className="font-mono font-medium text-text-primary">
+          {priceInCents}c
+        </span>
+      </div>
+
+      {/* Potential payout */}
+      <div className="flex justify-between text-sm mb-6 px-1">
+        <span className="text-text-muted">Potential payout</span>
+        <span className="font-mono font-semibold text-text-primary">
+          {formatZAR(potentialPayout)}
+        </span>
+      </div>
+
+      <Button
+        variant={side === 'yes' ? 'success' : 'danger'}
+        size="lg"
+        className="w-full"
+      >
+        Buy {side === 'yes' ? 'YES' : 'NO'}
+      </Button>
+
+      <p className="text-xs text-text-muted mt-3 text-center">
         Pays R1.00 per share if correct
       </p>
     </>

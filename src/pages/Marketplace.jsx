@@ -5,7 +5,6 @@ import FilterTabs from '../components/marketplace/FilterTabs'
 import SearchBar from '../components/marketplace/SearchBar'
 import AssetCard from '../components/marketplace/AssetCard'
 import PriceChange from '../components/common/PriceChange'
-import Badge from '../components/common/Badge'
 import { equities } from '../data/equities'
 import { tokenizedAssets } from '../data/tokenizedAssets'
 import { crypto } from '../data/crypto'
@@ -152,10 +151,6 @@ export default function Marketplace() {
             Discover and trade all asset classes
           </p>
         </div>
-        <Badge variant="neutral">
-          <TrendingUp className="w-3 h-3 mr-1" />
-          {allAssets.length} Assets
-        </Badge>
       </div>
 
       {/* Curated sections */}
