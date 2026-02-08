@@ -15,6 +15,7 @@ const typeConfig = {
 }
 
 function getInitials(name) {
+  if (!name) return '??'
   return name
     .split(' ')
     .map((w) => w[0])
@@ -66,7 +67,7 @@ export default function AssetCard({ asset }) {
       <div className="flex items-start gap-3">
         <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
           <span className="text-sm font-semibold text-primary">
-            {getInitials(asset.name)}
+            {getInitials(asset.name || asset.title)}
           </span>
         </div>
         <div className="flex-1 min-w-0">
