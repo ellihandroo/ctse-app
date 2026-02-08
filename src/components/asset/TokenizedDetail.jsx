@@ -1,18 +1,17 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { ExternalLink, MapPin, Shield } from 'lucide-react'
+import { MapPin, Shield } from 'lucide-react'
 import AssetHeader from './AssetHeader'
-import PriceChartPlaceholder from './PriceChartPlaceholder'
-import StatsGrid from './StatsGrid'
-import Card from '../common/Card'
+import PriceChart from './PriceChart'
+import KeyStatistics from './KeyStatistics'
+import AboutSection from './AboutSection'
+import RelatedLists from './RelatedLists'
+import NewsSection from './NewsSection'
 import Badge from '../common/Badge'
-import Button from '../common/Button'
-import Modal from '../common/Modal'
-import { formatZAR, formatAPY, formatCompact, formatNumber } from '../../utils/formatters'
+import { formatAPY, formatCompact, formatNumber } from '../../utils/formatters'
+import { tokenizedNews } from '../../data/news'
 
 export default function TokenizedDetail({ asset }) {
-  const navigate = useNavigate()
-  const [showCollateral, setShowCollateral] = useState(false)
+  const [hoverInfo, setHoverInfo] = useState(null)
 
   const stats = [
     { label: 'Valuation', value: asset.valuation ? formatCompact(asset.valuation) : '-' },
@@ -31,12 +30,16 @@ export default function TokenizedDetail({ asset }) {
     stats.push({ label: 'Maturity', value: new Date(asset.maturityDate).toLocaleDateString('en-ZA') })
   }
 
-  const collateralValue = asset.tokenPrice * 100
-  const borrowingPower = collateralValue * 0.5
+  const news = tokenizedNews.filter((n) => n.assetId === asset.id)
 
   return (
     <div className="space-y-6">
-      <AssetHeader asset={asset} price={asset.tokenPrice} />
+      <AssetHeader
+        asset={asset}
+        price={asset.tokenPrice}
+        hoveredPrice={hoverInfo?.price}
+        hoveredTime={hoverInfo?.time}
+      />
 
       {/* Yield + Chain badges */}
       <div className="flex items-center gap-2 flex-wrap">
@@ -56,68 +59,24 @@ export default function TokenizedDetail({ asset }) {
         )}
       </div>
 
-      <PriceChartPlaceholder data={asset.sparkline} />
-      <StatsGrid stats={stats} />
+      <PriceChart
+        sparkline={asset.sparkline}
+        currentPrice={asset.tokenPrice}
+        assetId={asset.id}
+        change24h={asset.change24h}
+        onHover={setHoverInfo}
+      />
 
-      <Card>
-        <h3 className="text-sm font-semibold text-text-primary mb-2">About</h3>
-        <p className="text-sm text-text-secondary leading-relaxed">
-          {asset.description}
-        </p>
-      </Card>
+      <KeyStatistics stats={stats} defaultVisible={4} />
 
-      <div className="flex gap-3 flex-wrap">
-        <Button
-          variant="primary"
-          size="lg"
-          className="flex-1"
-          onClick={() => navigate(`/trade/${asset.id}`)}
-        >
-          Buy {asset.symbol}
-        </Button>
-        <Button
-          variant="secondary"
-          size="lg"
-          className="flex-1"
-          onClick={() => setShowCollateral(true)}
-        >
-          Use as Collateral
-        </Button>
-        <Button variant="ghost" size="lg">
-          <ExternalLink className="w-4 h-4" />
-          View on Chain
-        </Button>
-      </div>
+      <AboutSection
+        title={`About ${asset.name}`}
+        description={asset.description}
+        details={asset.assetDetails}
+      />
 
-      {/* Collateral Modal */}
-      <Modal
-        isOpen={showCollateral}
-        onClose={() => setShowCollateral(false)}
-        title="Use as Collateral"
-      >
-        <div className="space-y-4">
-          <div className="bg-surface rounded-lg p-4 space-y-3">
-            <div className="flex justify-between text-sm">
-              <span className="text-text-secondary">Collateral Value</span>
-              <span className="font-mono font-medium">{formatZAR(collateralValue)}</span>
-            </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-text-secondary">LTV Ratio</span>
-              <span className="font-mono font-medium">50%</span>
-            </div>
-            <div className="border-t border-border pt-3 flex justify-between text-sm">
-              <span className="text-text-secondary font-medium">Borrowing Power</span>
-              <span className="font-mono font-semibold text-primary">{formatZAR(borrowingPower)}</span>
-            </div>
-          </div>
-          <p className="text-xs text-text-muted">
-            Available to borrow in: eZAR, USDC
-          </p>
-          <Button variant="primary" className="w-full">
-            Enable Collateral
-          </Button>
-        </div>
-      </Modal>
+      <RelatedLists lists={asset.relatedLists} />
+      <NewsSection news={news} />
     </div>
   )
 }

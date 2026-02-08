@@ -13,6 +13,7 @@ export const perpetuals = [
     openInterest: 12000000000,
     change24h: 3.2,
     maxLeverage: 20,
+    sparkline: [1780000, 1795000, 1810000, 1825000, 1840000, 1850000],
   },
   {
     id: 'eth-perp',
@@ -28,6 +29,7 @@ export const perpetuals = [
     openInterest: 5600000000,
     change24h: 2.1,
     maxLeverage: 20,
+    sparkline: [56800, 57200, 57600, 58000, 58200, 58400],
   },
   {
     id: 'sol-perp',
@@ -43,5 +45,6 @@ export const perpetuals = [
     openInterest: 1200000000,
     change24h: 5.8,
     maxLeverage: 10,
+    sparkline: [3900, 4000, 4050, 4100, 4150, 4200],
   },
 ]

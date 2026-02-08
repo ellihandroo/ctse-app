@@ -1,15 +1,17 @@
-import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 import { Clock } from 'lucide-react'
 import AssetHeader from './AssetHeader'
-import PriceChartPlaceholder from './PriceChartPlaceholder'
-import StatsGrid from './StatsGrid'
-import Card from '../common/Card'
+import PriceChart from './PriceChart'
+import KeyStatistics from './KeyStatistics'
+import AboutSection from './AboutSection'
+import RelatedLists from './RelatedLists'
+import NewsSection from './NewsSection'
 import Badge from '../common/Badge'
-import Button from '../common/Button'
-import { formatZAR, formatUSD, formatCompact, formatAPY } from '../../utils/formatters'
+import { formatUSD, formatCompact, formatAPY } from '../../utils/formatters'
+import { cryptoNews } from '../../data/news'
 
 export default function CryptoDetail({ asset }) {
-  const navigate = useNavigate()
+  const [hoverInfo, setHoverInfo] = useState(null)
 
   const stats = [
     { label: 'Price (USD)', value: formatUSD(asset.priceUSD) },
@@ -21,9 +23,16 @@ export default function CryptoDetail({ asset }) {
     stats.push({ label: 'APY', value: formatAPY(asset.apy) })
   }
 
+  const news = cryptoNews.filter((n) => n.assetId === asset.id)
+
   return (
     <div className="space-y-6">
-      <AssetHeader asset={asset} price={asset.price} />
+      <AssetHeader
+        asset={asset}
+        price={asset.price}
+        hoveredPrice={hoverInfo?.price}
+        hoveredTime={hoverInfo?.time}
+      />
 
       <div className="flex items-center gap-2 flex-wrap">
         {!asset.isStablecoin && (
@@ -39,27 +48,24 @@ export default function CryptoDetail({ asset }) {
         )}
       </div>
 
-      <PriceChartPlaceholder data={asset.sparkline} />
-      <StatsGrid stats={stats} />
+      <PriceChart
+        sparkline={asset.sparkline}
+        currentPrice={asset.price}
+        assetId={asset.id}
+        change24h={asset.change24h}
+        onHover={setHoverInfo}
+      />
 
-      <div className="flex gap-3">
-        <Button
-          variant="primary"
-          size="lg"
-          className="flex-1"
-          onClick={() => navigate(`/trade/${asset.id}`)}
-        >
-          Buy {asset.symbol}
-        </Button>
-        <Button
-          variant="secondary"
-          size="lg"
-          className="flex-1"
-          onClick={() => navigate(`/trade/${asset.id}`)}
-        >
-          Sell {asset.symbol}
-        </Button>
-      </div>
+      <KeyStatistics stats={stats} />
+
+      <AboutSection
+        title={`About ${asset.name}`}
+        description={asset.description}
+        details={asset.protocolDetails}
+      />
+
+      <RelatedLists lists={asset.relatedLists} />
+      <NewsSection news={news} />
     </div>
   )
 }

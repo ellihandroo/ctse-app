@@ -1,13 +1,13 @@
-import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 import AssetHeader from './AssetHeader'
-import StatsGrid from './StatsGrid'
+import PriceChart from './PriceChart'
+import KeyStatistics from './KeyStatistics'
 import Card from '../common/Card'
 import Badge from '../common/Badge'
-import Button from '../common/Button'
 import { formatZAR, formatCompact } from '../../utils/formatters'
 
 export default function FuturesDetail({ asset }) {
-  const navigate = useNavigate()
+  const [hoverInfo, setHoverInfo] = useState(null)
 
   const stats = [
     { label: 'Mark Price', value: formatZAR(asset.markPrice) },
@@ -25,7 +25,12 @@ export default function FuturesDetail({ asset }) {
 
   return (
     <div className="space-y-6">
-      <AssetHeader asset={asset} price={asset.markPrice} />
+      <AssetHeader
+        asset={asset}
+        price={asset.markPrice}
+        hoveredPrice={hoverInfo?.price}
+        hoveredTime={hoverInfo?.time}
+      />
 
       <div className="flex items-center gap-2 flex-wrap">
         <Badge variant="error">{asset.maxLeverage}x Leverage</Badge>
@@ -35,7 +40,15 @@ export default function FuturesDetail({ asset }) {
         </span>
       </div>
 
-      <StatsGrid stats={stats} />
+      <PriceChart
+        sparkline={asset.sparkline}
+        currentPrice={asset.markPrice}
+        assetId={asset.id}
+        change24h={asset.change24h}
+        onHover={setHoverInfo}
+      />
+
+      <KeyStatistics stats={stats} defaultVisible={4} />
 
       <Card>
         <h3 className="text-sm font-semibold text-text-primary mb-2">
@@ -47,25 +60,6 @@ export default function FuturesDetail({ asset }) {
           keeps the mark price close to the index price.
         </p>
       </Card>
-
-      <div className="flex gap-3">
-        <Button
-          variant="success"
-          size="lg"
-          className="flex-1"
-          onClick={() => navigate(`/trade/${asset.id}`)}
-        >
-          Long {asset.symbol}
-        </Button>
-        <Button
-          variant="danger"
-          size="lg"
-          className="flex-1"
-          onClick={() => navigate(`/trade/${asset.id}`)}
-        >
-          Short {asset.symbol}
-        </Button>
-      </div>
     </div>
   )
 }

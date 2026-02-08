@@ -1,8 +1,8 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
 import { useUser } from './context/UserContext'
 import AppLayout from './components/layout/AppLayout'
 import Login from './pages/Login'
-import Dashboard from './pages/Dashboard'
 import Marketplace from './pages/Marketplace'
 import AssetDetail from './pages/AssetDetail'
 import Trade from './pages/Trade'
@@ -13,6 +13,14 @@ import SpendCard from './pages/SpendCard'
 import CorporateActions from './pages/CorporateActions'
 import Settings from './pages/Settings'
 
+function ScrollToTop() {
+  const { pathname } = useLocation()
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+  return null
+}
+
 function ProtectedRoute({ children }) {
   const { isLoggedIn } = useUser()
   if (!isLoggedIn) return <Navigate to="/" replace />
@@ -22,6 +30,7 @@ function ProtectedRoute({ children }) {
 export default function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Login />} />
         <Route
@@ -31,7 +40,7 @@ export default function App() {
             </ProtectedRoute>
           }
         >
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard" element={<Navigate to="/marketplace" replace />} />
           <Route path="/marketplace" element={<Marketplace />} />
           <Route path="/asset/:id" element={<AssetDetail />} />
           <Route path="/trade/:id" element={<Trade />} />

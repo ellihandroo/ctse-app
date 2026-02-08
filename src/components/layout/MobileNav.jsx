@@ -1,29 +1,23 @@
 import { NavLink } from 'react-router-dom'
 import {
-  LayoutDashboard,
-  Store,
   Wallet,
   TrendingUp,
   Menu,
-} from 'lucide-react'
-import { useState } from 'react'
-import {
+  PiggyBank,
   CreditCard,
   Landmark,
   Settings,
-  PiggyBank,
   X,
 } from 'lucide-react'
+import { useState } from 'react'
 
 const primaryTabs = [
-  { to: '/dashboard', label: 'Home', icon: LayoutDashboard },
-  { to: '/marketplace', label: 'Market', icon: Store },
   { to: '/my-assets', label: 'Assets', icon: TrendingUp },
   { to: '/wallet', label: 'Wallet', icon: Wallet },
+  { to: '/earn', label: 'Earn', icon: PiggyBank },
 ]
 
 const moreItems = [
-  { to: '/earn', label: 'Earn', icon: PiggyBank },
   { to: '/card', label: 'Spend Card', icon: CreditCard },
   { to: '/corporate', label: 'Corporate', icon: Landmark },
   { to: '/settings', label: 'Settings', icon: Settings },

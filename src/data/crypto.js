@@ -12,6 +12,14 @@ export const crypto = [
     sparkline: [1780000, 1795000, 1810000, 1825000, 1840000, 1850000],
     isStablecoin: false,
     apy: null,
+    description: 'Bitcoin is the first and largest decentralized cryptocurrency, created in 2009 by pseudonymous developer Satoshi Nakamoto. It uses a proof-of-work consensus mechanism and has a fixed supply of 21 million coins, positioning it as a digital store of value often called "digital gold".',
+    protocolDetails: {
+      blockchain: 'Bitcoin',
+      consensus: 'Proof of Work',
+      creator: 'Satoshi Nakamoto',
+      launched: '2009',
+    },
+    relatedLists: ['Layer 1', 'Store of Value', 'Proof of Work', 'Large Cap'],
   },
   {
     id: 'eth',
@@ -26,6 +34,14 @@ export const crypto = [
     sparkline: [56800, 57200, 57600, 58000, 58200, 58400],
     isStablecoin: false,
     apy: null,
+    description: 'Ethereum is a decentralized platform that enables smart contracts and decentralized applications. Following "The Merge" in 2022, it transitioned to proof-of-stake, reducing energy consumption by ~99%. It remains the dominant platform for DeFi, NFTs, and tokenized assets.',
+    protocolDetails: {
+      blockchain: 'Ethereum',
+      consensus: 'Proof of Stake',
+      creator: 'Vitalik Buterin',
+      launched: '2015',
+    },
+    relatedLists: ['Layer 1', 'Smart Contracts', 'DeFi', 'Large Cap'],
   },
   {
     id: 'sol',
@@ -40,6 +56,14 @@ export const crypto = [
     sparkline: [3900, 4000, 4050, 4100, 4150, 4200],
     isStablecoin: false,
     apy: null,
+    description: 'Solana is a high-performance blockchain designed for speed and low transaction costs, processing up to 65,000 transactions per second. Its novel Proof of History mechanism combined with Proof of Stake makes it popular for DeFi, gaming, and NFT applications.',
+    protocolDetails: {
+      blockchain: 'Solana',
+      consensus: 'Proof of History + PoS',
+      creator: 'Anatoly Yakovenko',
+      launched: '2020',
+    },
+    relatedLists: ['Layer 1', 'High Performance', 'DeFi', 'Mid Cap'],
   },
   {
     id: 'usdc',
@@ -54,6 +78,14 @@ export const crypto = [
     sparkline: [18.72, 18.72, 18.72, 18.72, 18.72, 18.72],
     isStablecoin: true,
     apy: null,
+    description: 'USD Coin is a fully-collateralized US dollar stablecoin issued by Circle. Each USDC is backed 1:1 by US dollar reserves held in regulated financial institutions, with regular third-party attestations to verify reserves.',
+    protocolDetails: {
+      blockchain: 'Multi-chain',
+      consensus: 'N/A (Stablecoin)',
+      creator: 'Circle / Coinbase',
+      launched: '2018',
+    },
+    relatedLists: ['Stablecoin', 'Payments', 'DeFi'],
   },
   {
     id: 'ezar',
@@ -69,6 +101,14 @@ export const crypto = [
     isStablecoin: true,
     apy: 8.5,
     apySource: 'SA Treasury backing',
+    description: 'eZAR is a South African rand-pegged stablecoin backed by South African government treasury bills. It enables instant ZAR-denominated transactions on-chain while earning yield from the underlying treasury backing.',
+    protocolDetails: {
+      blockchain: 'Solana',
+      consensus: 'N/A (Stablecoin)',
+      creator: 'CTSE Digital',
+      launched: '2025',
+    },
+    relatedLists: ['Stablecoin', 'Yield-Bearing', 'ZAR Pegged'],
   },
   {
     id: 'ctse-usd',
@@ -84,5 +124,13 @@ export const crypto = [
     isStablecoin: true,
     apy: 5.2,
     apySource: 'US Treasury backing',
+    description: 'CTSE Dollar is a US dollar-pegged stablecoin issued by the CTSE platform, backed by US Treasury bills. It provides South African investors with easy access to dollar-denominated savings with competitive yield.',
+    protocolDetails: {
+      blockchain: 'Solana',
+      consensus: 'N/A (Stablecoin)',
+      creator: 'CTSE Digital',
+      launched: '2025',
+    },
+    relatedLists: ['Stablecoin', 'Yield-Bearing', 'USD Pegged'],
   },
 ]

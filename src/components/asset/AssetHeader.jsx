@@ -19,9 +19,21 @@ function getInitials(name) {
     .toUpperCase()
 }
 
-export default function AssetHeader({ asset, price, showChange = true }) {
+export default function AssetHeader({ asset, price, showChange = true, hoveredPrice, hoveredTime }) {
   const config = typeConfig[asset.assetType] || typeConfig.equity
   const displayName = asset.title || asset.name
+  const isHovering = hoveredPrice != null
+
+  const displayPrice = isHovering ? hoveredPrice : price
+
+  const formattedTime = isHovering && hoveredTime
+    ? new Date(hoveredTime * 1000).toLocaleString('en-ZA', {
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+      })
+    : null
 
   return (
     <div className="flex items-start gap-4">
@@ -42,13 +54,17 @@ export default function AssetHeader({ asset, price, showChange = true }) {
             {asset.symbol}
           </p>
         )}
-        {price != null && (
+        {displayPrice != null && (
           <div className="flex items-center gap-3 mt-2">
             <span className="text-2xl sm:text-3xl font-bold font-mono text-text-primary">
-              {formatZAR(price)}
+              {formatZAR(displayPrice)}
             </span>
-            {showChange && asset.change24h != null && (
-              <PriceChange change={asset.change24h} size="md" />
+            {isHovering && formattedTime ? (
+              <span className="text-sm text-text-muted">{formattedTime}</span>
+            ) : (
+              showChange && asset.change24h != null && (
+                <PriceChange change={asset.change24h} size="md" />
+              )
             )}
           </div>
         )}
