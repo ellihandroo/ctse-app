@@ -11,6 +11,7 @@ import { tokenizedAssets } from '../data/tokenizedAssets'
 import { crypto } from '../data/crypto'
 import { predictions } from '../data/predictions'
 import { perpetuals } from '../data/perpetuals'
+import AssetIcon from '../components/common/AssetIcon'
 import { formatZAR, formatCompact } from '../utils/formatters'
 
 const allAssets = [
@@ -33,16 +34,6 @@ function getPrice(asset) {
 
 function getVolume(asset) {
   return asset.volume24h || asset.totalVolume || 0
-}
-
-function getInitials(name) {
-  if (!name) return '??'
-  return name
-    .split(' ')
-    .map((w) => w[0])
-    .join('')
-    .slice(0, 2)
-    .toUpperCase()
 }
 
 function getSearchText(asset) {
@@ -77,11 +68,7 @@ function CuratedRow({ asset }) {
       className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg hover:bg-surface transition-colors text-left"
       onClick={() => navigate(`/asset/${asset.id}`)}
     >
-      <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-        <span className="text-xs font-semibold text-primary">
-          {getInitials(asset.name || asset.title)}
-        </span>
-      </div>
+      <AssetIcon symbol={asset.symbol} name={asset.name || asset.title} size="md" assetType={asset.assetType} />
       <div className="flex-1 min-w-0">
         <p className="text-sm font-medium text-text-primary truncate">
           {isPrediction ? asset.title : asset.name}

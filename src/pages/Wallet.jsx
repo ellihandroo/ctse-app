@@ -9,6 +9,7 @@ import {
 import Card from '../components/common/Card'
 import Badge from '../components/common/Badge'
 import Button from '../components/common/Button'
+import AssetIcon from '../components/common/AssetIcon'
 import { formatZAR, formatAPY } from '../utils/formatters'
 import { brokerWallet, spendWallet } from '../data/wallet'
 
@@ -46,11 +47,7 @@ export default function Wallet() {
             {brokerWallet.balances.map((balance) => (
               <div key={balance.asset} className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-full bg-surface flex items-center justify-center">
-                    <span className="text-xs font-semibold text-text-secondary">
-                      {balance.asset.slice(0, 2)}
-                    </span>
-                  </div>
+                  <AssetIcon symbol={balance.asset} name={balance.asset} size="sm" />
                   <div>
                     <span className="text-sm font-medium text-text-primary">{balance.asset}</span>
                     {balance.apy && (
