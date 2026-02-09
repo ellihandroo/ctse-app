@@ -1,6 +1,5 @@
 import { NavLink } from 'react-router-dom'
 import {
-  Wallet,
   TrendingUp,
   Menu,
   PiggyBank,
@@ -13,12 +12,12 @@ import { useState } from 'react'
 
 const primaryTabs = [
   { to: '/my-assets', label: 'Assets', icon: TrendingUp },
-  { to: '/wallet', label: 'Wallet', icon: Wallet },
   { to: '/earn', label: 'Earn', icon: PiggyBank },
+  { to: '/card', label: 'Card', icon: CreditCard },
 ]
 
 const moreItems = [
-  { to: '/card', label: 'Spend Card', icon: CreditCard },
+  { to: '/wallet', label: 'Wallet Details', icon: CreditCard },
   { to: '/corporate', label: 'Corporate', icon: Landmark },
   { to: '/settings', label: 'Settings', icon: Settings },
 ]

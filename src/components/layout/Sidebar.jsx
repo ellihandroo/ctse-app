@@ -1,7 +1,6 @@
 import { NavLink, useNavigate, useLocation } from 'react-router-dom'
 import { useState, useRef, useEffect } from 'react'
 import {
-  Wallet,
   CreditCard,
   TrendingUp,
   Landmark,
@@ -14,7 +13,6 @@ import { useUser } from '../../context/UserContext'
 
 const navItems = [
   { to: '/my-assets', label: 'My Assets', icon: TrendingUp },
-  { to: '/wallet', label: 'Wallet', icon: Wallet },
   { to: '/earn', label: 'Earn', icon: PiggyBank },
   { to: '/card', label: 'Spend Card', icon: CreditCard },
   { to: '/corporate', label: 'Corporate', icon: Landmark },
