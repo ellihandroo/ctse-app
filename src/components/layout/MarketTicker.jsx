@@ -37,7 +37,7 @@ export default function MarketTicker() {
 
       <style>{`
         .ticker-track {
-          animation: ticker-scroll 30s linear infinite;
+          animation: ticker-scroll 37.5s linear infinite;
           width: max-content;
         }
         @keyframes ticker-scroll {

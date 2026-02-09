@@ -366,75 +366,75 @@ export default function Marketplace() {
         }}
       />
 
-      {/* Desktop: Search + scrollable (Tabs + Sector + Sort) */}
+      {/* Desktop: Search + Tabs (scrollable) + Sector + Sort */}
       <div className="hidden md:flex items-center gap-2">
         <div className="w-48 flex-shrink-0">
           <SearchBar value={search} onChange={setSearch} />
         </div>
-        <div className="flex-1 flex gap-2 items-center overflow-x-auto scrollbar-none min-w-0">
+        <div className="flex-1 flex gap-1.5 overflow-x-auto scrollbar-none min-w-0">
           <FilterTabs activeTab={activeTab} onTabChange={setActiveTab} />
-          <div className="relative flex-shrink-0">
-            <button
-              onClick={() => { setShowSector((prev) => !prev); setShowSort(false) }}
-              className={`flex items-center gap-1.5 h-9 px-3 rounded-lg border text-sm font-medium transition-colors whitespace-nowrap ${
-                activeSector !== 'All'
-                  ? 'border-primary bg-primary-light text-primary'
-                  : 'border-border text-text-secondary hover:bg-surface'
-              }`}
-            >
-              {activeSector === 'All' ? 'Sector' : activeSector}
-              <ChevronDown className={`w-3.5 h-3.5 transition-transform ${showSector ? 'rotate-180' : ''}`} />
-            </button>
-            {showSector && (
-              <div className="absolute right-0 top-full mt-1 bg-white border border-border rounded-xl shadow-lg py-1 z-20 min-w-[160px]">
-                {sectorTags.map((tag) => (
-                  <button
-                    key={tag}
-                    onClick={() => {
-                      setActiveSector(tag)
-                      setShowSector(false)
-                    }}
-                    className={`w-full text-left px-3 py-2 text-xs transition-colors ${
-                      activeSector === tag
-                        ? 'text-primary font-medium bg-primary-light'
-                        : 'text-text-secondary hover:bg-surface'
-                    }`}
-                  >
-                    {tag}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-          <div className="relative flex-shrink-0">
-            <button
-              onClick={() => { setShowSort((prev) => !prev); setShowSector(false) }}
-              className="flex items-center gap-1.5 h-9 px-3 rounded-lg border border-border text-sm font-medium text-text-secondary hover:bg-surface transition-colors whitespace-nowrap"
-            >
-              {sortOptions.find((o) => o.id === sort)?.label}
-              <ChevronDown className={`w-3.5 h-3.5 transition-transform ${showSort ? 'rotate-180' : ''}`} />
-            </button>
-            {showSort && (
-              <div className="absolute right-0 top-full mt-1 bg-white border border-border rounded-xl shadow-lg py-1 z-20 min-w-[140px]">
-                {sortOptions.map((option) => (
-                  <button
-                    key={option.id}
-                    onClick={() => {
-                      setSort(option.id)
-                      setShowSort(false)
-                    }}
-                    className={`w-full text-left px-3 py-2 text-xs transition-colors ${
-                      sort === option.id
-                        ? 'text-primary font-medium bg-primary-light'
-                        : 'text-text-secondary hover:bg-surface'
-                    }`}
-                  >
-                    {option.label}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+        </div>
+        <div className="relative flex-shrink-0">
+          <button
+            onClick={() => { setShowSector((prev) => !prev); setShowSort(false) }}
+            className={`flex items-center gap-1.5 h-9 px-3 rounded-lg border text-sm font-medium transition-colors whitespace-nowrap ${
+              activeSector !== 'All'
+                ? 'border-primary bg-primary-light text-primary'
+                : 'border-border text-text-secondary hover:bg-surface'
+            }`}
+          >
+            {activeSector === 'All' ? 'Sector' : activeSector}
+            <ChevronDown className={`w-3.5 h-3.5 transition-transform ${showSector ? 'rotate-180' : ''}`} />
+          </button>
+          {showSector && (
+            <div className="absolute right-0 top-full mt-1 bg-white border border-border rounded-xl shadow-lg py-1 z-20 min-w-[160px]">
+              {sectorTags.map((tag) => (
+                <button
+                  key={tag}
+                  onClick={() => {
+                    setActiveSector(tag)
+                    setShowSector(false)
+                  }}
+                  className={`w-full text-left px-3 py-2 text-xs transition-colors ${
+                    activeSector === tag
+                      ? 'text-primary font-medium bg-primary-light'
+                      : 'text-text-secondary hover:bg-surface'
+                  }`}
+                >
+                  {tag}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+        <div className="relative flex-shrink-0">
+          <button
+            onClick={() => { setShowSort((prev) => !prev); setShowSector(false) }}
+            className="flex items-center gap-1.5 h-9 px-3 rounded-lg border border-border text-sm font-medium text-text-secondary hover:bg-surface transition-colors whitespace-nowrap"
+          >
+            {sortOptions.find((o) => o.id === sort)?.label}
+            <ChevronDown className={`w-3.5 h-3.5 transition-transform ${showSort ? 'rotate-180' : ''}`} />
+          </button>
+          {showSort && (
+            <div className="absolute right-0 top-full mt-1 bg-white border border-border rounded-xl shadow-lg py-1 z-20 min-w-[140px]">
+              {sortOptions.map((option) => (
+                <button
+                  key={option.id}
+                  onClick={() => {
+                    setSort(option.id)
+                    setShowSort(false)
+                  }}
+                  className={`w-full text-left px-3 py-2 text-xs transition-colors ${
+                    sort === option.id
+                      ? 'text-primary font-medium bg-primary-light'
+                      : 'text-text-secondary hover:bg-surface'
+                  }`}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 

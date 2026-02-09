@@ -13,7 +13,7 @@ export default function AppLayout() {
       <Navbar />
       <div className="flex">
         <Sidebar />
-        <main className="flex-1 min-w-0 overflow-x-hidden">
+        <main className="flex-1 min-w-0 overflow-x-clip">
           {showTicker && <MarketTicker />}
           <div className="p-4 md:p-6 pb-20 lg:pb-6">
             <div key={location.pathname} className="animate-fade-in">

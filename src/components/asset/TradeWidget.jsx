@@ -243,8 +243,12 @@ const widgetMap = {
   prediction: PredictionWidget,
 }
 
-export default function TradeWidget({ asset }) {
+export default function TradeWidget({ asset, compact }) {
   const WidgetContent = widgetMap[asset.assetType] || EquityCryptoTokenizedWidget
+
+  if (compact) {
+    return <WidgetContent asset={asset} />
+  }
 
   return (
     <Card className="w-full">
