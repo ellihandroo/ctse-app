@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { Search, Bell, Wallet, ChevronDown, ArrowDownLeft, ArrowUpRight, TrendingUp, Coins, ShieldCheck, CreditCard, CheckCircle } from 'lucide-react'
 import { brokerWallet, spendWallet } from '../../data/wallet'
 import { formatZAR } from '../../utils/formatters'
@@ -14,10 +14,17 @@ const NOTIFICATIONS = [
 
 export default function Navbar() {
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const [navSearch, setNavSearch] = useState(searchParams.get('q') || '')
   const [showWallet, setShowWallet] = useState(false)
   const [showNotifs, setShowNotifs] = useState(false)
   const walletRef = useRef(null)
   const notifsRef = useRef(null)
+
+  // Keep navbar search in sync with URL ?q= param
+  useEffect(() => {
+    setNavSearch(searchParams.get('q') || '')
+  }, [searchParams])
 
   const brokerTotal = brokerWallet.balances.reduce((sum, b) => sum + b.value, 0)
   const totalBalance = brokerTotal + spendWallet.balance
@@ -54,6 +61,16 @@ export default function Navbar() {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
           <input
             type="text"
+            value={navSearch}
+            onChange={(e) => {
+              setNavSearch(e.target.value)
+              navigate(`/marketplace?q=${encodeURIComponent(e.target.value)}`, { replace: true })
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                navigate(`/marketplace?q=${encodeURIComponent(navSearch)}`)
+              }
+            }}
             placeholder="Search assets, markets..."
             className="w-full pl-10 pr-4 py-2 bg-surface border border-border rounded-lg text-sm focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/20"
           />
