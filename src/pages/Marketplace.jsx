@@ -1,6 +1,6 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { createPortal } from 'react-dom'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { TrendingUp, Flame, Sparkles, ChevronDown, SlidersHorizontal, X } from 'lucide-react'
 import FilterTabs from '../components/marketplace/FilterTabs'
 import SearchBar from '../components/marketplace/SearchBar'
@@ -283,13 +283,25 @@ function MobileFilterSheet({ isOpen, onClose, filters, onApply }) {
 /* ---------- Main component ---------- */
 
 export default function Marketplace() {
+  const [searchParams, setSearchParams] = useSearchParams()
   const [activeTab, setActiveTab] = useState('all')
   const [activeSector, setActiveSector] = useState('All')
   const [sort, setSort] = useState('popular')
   const [showSector, setShowSector] = useState(false)
   const [showSort, setShowSort] = useState(false)
   const [showMobileFilters, setShowMobileFilters] = useState(false)
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState(searchParams.get('q') || '')
+
+  // Sync search state when navbar search changes the URL param
+  useEffect(() => {
+    const q = searchParams.get('q') || ''
+    setSearch(q)
+  }, [searchParams])
+
+  const handleSearch = (value) => {
+    setSearch(value)
+    setSearchParams(value ? { q: value } : {}, { replace: true })
+  }
 
   const filtered = useMemo(() => {
     const query = search.toLowerCase().trim()
@@ -328,7 +340,7 @@ export default function Marketplace() {
       {/* Mobile: Search + Filter icon */}
       <div className="flex items-center gap-2 md:hidden">
         <div className="flex-1">
-          <SearchBar value={search} onChange={setSearch} />
+          <SearchBar value={search} onChange={handleSearch} />
         </div>
         <button
           onClick={() => setShowMobileFilters(true)}
@@ -356,7 +368,7 @@ export default function Marketplace() {
       {/* Desktop: Search + Tabs (scrollable) + Sector + Sort */}
       <div className="hidden md:flex items-center gap-2">
         <div className="w-48 flex-shrink-0">
-          <SearchBar value={search} onChange={setSearch} />
+          <SearchBar value={search} onChange={handleSearch} />
         </div>
         <div className="flex-1 flex gap-1.5 overflow-x-auto scrollbar-none min-w-0">
           <FilterTabs activeTab={activeTab} onTabChange={setActiveTab} />
@@ -437,7 +449,7 @@ export default function Marketplace() {
           <p className="text-text-muted">No assets found</p>
           <button
             onClick={() => {
-              setSearch('')
+              handleSearch('')
               setActiveTab('all')
               setActiveSector('All')
               setSort('popular')
