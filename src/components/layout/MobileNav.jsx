@@ -1,14 +1,14 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import {
   TrendingUp,
-  Menu,
   PiggyBank,
   CreditCard,
   Landmark,
   Settings,
+  Menu,
   X,
 } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
 const primaryTabs = [
   { to: '/my-assets', label: 'Assets', icon: TrendingUp },
@@ -17,55 +17,64 @@ const primaryTabs = [
 ]
 
 const moreItems = [
-  { to: '/wallet', label: 'Wallet Details', icon: CreditCard },
   { to: '/corporate', label: 'Corporate', icon: Landmark },
   { to: '/settings', label: 'Settings', icon: Settings },
 ]
 
+const moreRoutes = moreItems.map((item) => item.to)
+
 export default function MobileNav() {
   const [showMore, setShowMore] = useState(false)
+  const { pathname } = useLocation()
+  const menuRef = useRef(null)
+  const isMoreActive = moreRoutes.includes(pathname)
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setShowMore(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
 
   return (
-    <>
-      {/* More menu overlay */}
+    <div className="fixed bottom-0 left-0 right-0 z-30 lg:hidden" ref={menuRef}>
+      {/* More panel — slides up from tab bar */}
       {showMore && (
-        <div className="fixed inset-0 z-40 lg:hidden">
-          <div
-            className="absolute inset-0 bg-black/50"
-            onClick={() => setShowMore(false)}
-          />
-          <div className="absolute bottom-16 left-0 right-0 bg-white border-t border-border rounded-t-2xl p-4 z-50">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-sm font-semibold text-text-primary">More</span>
-              <button onClick={() => setShowMore(false)}>
-                <X className="w-5 h-5 text-text-muted" />
-              </button>
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              {moreItems.map(({ to, label, icon: Icon }) => (
-                <NavLink
-                  key={to}
-                  to={to}
-                  onClick={() => setShowMore(false)}
-                  className="flex items-center gap-2 p-3 rounded-lg hover:bg-surface text-sm text-text-secondary"
-                >
-                  <Icon className="w-5 h-5" />
-                  {label}
-                </NavLink>
-              ))}
-            </div>
+        <div className="bg-white border-t border-border px-4 py-3">
+          <div className="flex gap-2">
+            {moreItems.map(({ to, label, icon: Icon }) => (
+              <NavLink
+                key={to}
+                to={to}
+                onClick={() => setShowMore(false)}
+                className={({ isActive }) =>
+                  `flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                    isActive
+                      ? 'bg-primary-light text-primary'
+                      : 'bg-surface text-text-secondary'
+                  }`
+                }
+              >
+                <Icon className="w-4 h-4" />
+                {label}
+              </NavLink>
+            ))}
           </div>
         </div>
       )}
 
       {/* Bottom tab bar */}
-      <nav className="fixed bottom-0 left-0 right-0 h-16 bg-white border-t border-border flex items-center justify-around px-2 z-30 lg:hidden">
+      <nav className="bg-white border-t border-border flex items-center justify-evenly px-4 safe-area-bottom">
         {primaryTabs.map(({ to, label, icon: Icon }) => (
           <NavLink
             key={to}
             to={to}
+            onClick={() => setShowMore(false)}
             className={({ isActive }) =>
-              `flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+              `flex flex-col items-center gap-1 px-2 pt-3 pb-2 text-[10px] font-medium transition-colors ${
                 isActive ? 'text-primary' : 'text-text-muted'
               }`
             }
@@ -75,13 +84,15 @@ export default function MobileNav() {
           </NavLink>
         ))}
         <button
-          className="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-lg text-xs font-medium text-text-muted"
           onClick={() => setShowMore((prev) => !prev)}
+          className={`flex flex-col items-center gap-1 px-2 pt-3 pb-2 text-[10px] font-medium transition-colors ${
+            showMore || isMoreActive ? 'text-primary' : 'text-text-muted'
+          }`}
         >
-          <Menu className="w-5 h-5" />
+          {showMore ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           More
         </button>
       </nav>
-    </>
+    </div>
   )
 }

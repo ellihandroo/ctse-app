@@ -143,16 +143,6 @@ export default function Marketplace() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-        <div>
-          <h1 className="text-2xl font-bold text-text-primary">Explore</h1>
-          <p className="text-text-secondary text-sm mt-1">
-            Discover and trade all asset classes
-          </p>
-        </div>
-      </div>
-
       {/* Curated sections — horizontal scroll on mobile, grid on desktop */}
       <div className="flex gap-3 overflow-x-auto scrollbar-none md:grid md:grid-cols-3 md:overflow-visible">
         <CuratedSection

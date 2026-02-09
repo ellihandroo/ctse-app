@@ -1,4 +1,4 @@
-import { NavLink, useNavigate, useLocation } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { useState, useRef, useEffect } from 'react'
 import {
   CreditCard,
@@ -21,8 +21,6 @@ const navItems = [
 export default function Sidebar() {
   const { user, logout } = useUser()
   const navigate = useNavigate()
-  const location = useLocation()
-  const hasTicker = location.pathname === '/marketplace'
   const [showDropdown, setShowDropdown] = useState(false)
   const dropdownRef = useRef(null)
 
@@ -43,7 +41,7 @@ export default function Sidebar() {
   }
 
   return (
-    <aside className={`hidden lg:flex flex-col w-60 border-r border-border bg-white sticky ${hasTicker ? 'top-[6rem] h-[calc(100vh-6rem)]' : 'top-16 h-[calc(100vh-4rem)]'}`}>
+    <aside className="hidden lg:flex flex-col w-60 border-r border-border bg-white sticky top-16 h-[calc(100vh-4rem)]">
       <nav className="flex-1 py-4 px-3 overflow-y-auto">
         <ul className="space-y-1">
           {navItems.map(({ to, label, icon: Icon }) => (

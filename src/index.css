@@ -81,6 +81,11 @@ body {
   animation: fadeIn 0.3s ease-out;
 }
 
+/* Safe area padding for iPhone home indicator */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
 /* Hide TradingView attribution logo on lightweight-charts */
 #tv-attr-logo {
   display: none !important;
