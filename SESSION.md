@@ -3,23 +3,30 @@
 > Overwritten each session save. Contains "hot" context for resuming work.
 
 ## Last Updated
-2026-02-08
+2026-02-09
 
 ## Current Branch
-`feature/phase-4-polish` (committed, ready to merge)
+`main` (up to date)
 
 ## What Was Done
-- All 4 phases complete in a single session
-- 12 screens built: Login, Dashboard, Marketplace, Asset Detail (5 variants),
-  Trade, Wallet, Earn, Spend Card, My Assets, Corporate Actions, Settings
-- 22 tradable assets across 5 types
-- Page transitions, code-splitting, Vercel config
+- Fixed navbar search — was a static input with no state, typing did nothing
+- Connected navbar search to marketplace filtering via `?q=` URL param
+- Both search bars (navbar + marketplace inline) now stay in sync
+- PR #7 merged to main
+
+## Left Off At
+- Bug fix complete, no in-progress work
+- On `main` branch, clean working tree (only untracked `.claude/skills/`)
 
 ## Immediate Next Steps
-1. Merge Phase 4 to main
-2. Push to GitHub
-3. Deploy to Vercel at ctse.app
-4. Test on mobile devices
+1. Test search on mobile (marketplace inline search + mobile filters)
+2. Continue with any remaining polish / bug fixes from live testing
+3. Mobile device testing still pending from deploy checklist
 
 ## Open Issues / Blockers
-- None — ready to deploy
+- None currently
+
+## Context for Resumption
+- App is deployed and live at ctse.app
+- All 4 phases complete, now in bug-fix/polish mode
+- User is testing the live site and reporting issues
