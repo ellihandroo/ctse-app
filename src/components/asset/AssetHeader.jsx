@@ -1,5 +1,6 @@
 import Badge from '../common/Badge'
 import PriceChange from '../common/PriceChange'
+import AssetIcon from '../common/AssetIcon'
 import { formatZAR } from '../../utils/formatters'
 
 const typeConfig = {
@@ -8,15 +9,6 @@ const typeConfig = {
   crypto: { label: 'Crypto', variant: 'dark' },
   prediction: { label: 'Prediction', variant: 'warning' },
   futures: { label: 'Futures', variant: 'error' },
-}
-
-function getInitials(name) {
-  return name
-    .split(' ')
-    .map((w) => w[0])
-    .join('')
-    .slice(0, 2)
-    .toUpperCase()
 }
 
 export default function AssetHeader({ asset, price, showChange = true, hoveredPrice, hoveredTime }) {
@@ -37,11 +29,7 @@ export default function AssetHeader({ asset, price, showChange = true, hoveredPr
 
   return (
     <div className="flex items-start gap-4">
-      <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-        <span className="text-lg font-bold text-primary">
-          {getInitials(displayName)}
-        </span>
-      </div>
+      <AssetIcon symbol={asset.symbol} name={displayName} size="xl" assetType={asset.assetType} />
       <div className="flex-1">
         <div className="flex items-center gap-2 flex-wrap">
           <h1 className="text-xl sm:text-2xl font-bold text-text-primary">

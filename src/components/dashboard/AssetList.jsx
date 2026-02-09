@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import Card from '../common/Card'
 import Badge from '../common/Badge'
 import PriceChange from '../common/PriceChange'
+import AssetIcon from '../common/AssetIcon'
 import { formatZAR, formatAPY } from '../../utils/formatters'
 
 const typeConfig = {
@@ -27,11 +28,7 @@ export default function AssetList({ holdings }) {
               onClick={() => navigate(`/asset/${holding.id}`)}
               className="w-full flex items-center gap-3 px-4 py-3 hover:bg-surface/50 transition-colors text-left"
             >
-              <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                <span className="text-xs font-semibold text-primary">
-                  {holding.symbol.slice(0, 2)}
-                </span>
-              </div>
+              <AssetIcon symbol={holding.symbol} name={holding.name} size="md" />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-medium text-text-primary truncate">

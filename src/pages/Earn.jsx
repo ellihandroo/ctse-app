@@ -2,6 +2,7 @@ import { TrendingUp, Shield, Info } from 'lucide-react'
 import Card from '../components/common/Card'
 import Badge from '../components/common/Badge'
 import Button from '../components/common/Button'
+import AssetIcon from '../components/common/AssetIcon'
 import { formatZAR, formatAPY, formatCompact } from '../utils/formatters'
 import { earnOptions, userEarnings } from '../data/earn'
 
@@ -59,11 +60,7 @@ export default function Earn() {
         {earnOptions.map((option) => (
           <Card key={option.id} className="flex flex-col">
             <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                <span className="text-sm font-bold text-primary">
-                  {option.symbol.slice(0, 2)}
-                </span>
-              </div>
+              <AssetIcon symbol={option.symbol} name={option.name} size="lg" />
               <div>
                 <h3 className="font-semibold text-text-primary">{option.name}</h3>
                 <span className="text-xs text-text-muted font-mono">{option.symbol}</span>
