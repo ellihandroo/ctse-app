@@ -9,13 +9,13 @@ const tabs = [
 
 export default function FilterTabs({ activeTab, onTabChange }) {
   return (
-    <div className="flex gap-1 overflow-x-auto pb-1 scrollbar-none">
+    <>
       {tabs.map(({ id, label }) => (
         <button
           key={id}
           onClick={() => onTabChange(id)}
           className={`
-            px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors
+            h-9 px-4 rounded-lg text-sm font-medium whitespace-nowrap transition-colors flex-shrink-0
             ${activeTab === id
               ? 'bg-primary text-white'
               : 'bg-surface text-text-secondary hover:bg-gray-100 hover:text-text-primary'
@@ -25,6 +25,6 @@ export default function FilterTabs({ activeTab, onTabChange }) {
           {label}
         </button>
       ))}
-    </div>
+    </>
   )
 }

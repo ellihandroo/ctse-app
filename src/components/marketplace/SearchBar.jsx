@@ -9,7 +9,7 @@ export default function SearchBar({ value, onChange }) {
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder="Search by name or symbol..."
-        className="w-full pl-10 pr-10 py-2.5 bg-surface border border-border rounded-lg text-sm focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/20"
+        className="w-full h-9 pl-10 pr-10 bg-surface border border-border rounded-lg text-sm focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/20"
       />
       {value && (
         <button

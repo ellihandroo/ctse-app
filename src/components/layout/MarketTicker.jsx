@@ -24,7 +24,7 @@ function TickerItem({ item }) {
 
 export default function MarketTicker() {
   return (
-    <div className="h-8 bg-white border-b border-border overflow-hidden relative">
+    <div className="h-8 bg-white overflow-hidden relative" style={{ maskImage: 'linear-gradient(to right, transparent, black 80px, black calc(100% - 80px), transparent)', WebkitMaskImage: 'linear-gradient(to right, transparent, black 80px, black calc(100% - 80px), transparent)' }}>
       <div className="ticker-track flex items-center h-full">
         {/* Duplicate items for seamless infinite loop */}
         {marketIndices.map((item) => (
