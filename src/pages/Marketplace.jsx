@@ -187,9 +187,9 @@ function MobileFilterSheet({ isOpen, onClose, filters, onApply }) {
   }
 
   return createPortal(
-    <div className="fixed inset-0 z-50 md:hidden flex items-end justify-center p-4">
+    <div className="fixed inset-0 z-50 md:hidden flex items-end justify-center">
       <div className="absolute inset-0 bg-black/50" onClick={handleCancel} />
-      <div className="relative w-full bg-white rounded-2xl max-h-[75vh] overflow-y-auto shadow-xl">
+      <div className="relative w-full bg-white rounded-t-2xl max-h-[80vh] overflow-y-auto safe-area-bottom">
         <div className="flex items-center justify-between px-5 pt-5 pb-3">
           <h3 className="text-base font-semibold text-text-primary">Filters</h3>
           <button onClick={handleCancel} className="p-1 rounded-full hover:bg-surface">
