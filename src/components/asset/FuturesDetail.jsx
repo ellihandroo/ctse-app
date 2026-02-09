@@ -6,7 +6,7 @@ import Card from '../common/Card'
 import Badge from '../common/Badge'
 import { formatZAR, formatCompact } from '../../utils/formatters'
 
-export default function FuturesDetail({ asset }) {
+export default function FuturesDetail({ asset, headerActions }) {
   const [hoverInfo, setHoverInfo] = useState(null)
 
   const stats = [
