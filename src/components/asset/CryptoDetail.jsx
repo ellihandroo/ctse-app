@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { Clock } from 'lucide-react'
 import AssetHeader from './AssetHeader'
 import PriceChart from './PriceChart'
 import KeyStatistics from './KeyStatistics'
@@ -10,7 +9,7 @@ import Badge from '../common/Badge'
 import { formatUSD, formatCompact, formatAPY } from '../../utils/formatters'
 import { cryptoNews } from '../../data/news'
 
-export default function CryptoDetail({ asset }) {
+export default function CryptoDetail({ asset, headerActions }) {
   const [hoverInfo, setHoverInfo] = useState(null)
 
   const stats = [
@@ -32,15 +31,10 @@ export default function CryptoDetail({ asset }) {
         price={asset.price}
         hoveredPrice={hoverInfo?.price}
         hoveredTime={hoverInfo?.time}
+        actions={headerActions}
       />
 
       <div className="flex items-center gap-2 flex-wrap">
-        {!asset.isStablecoin && (
-          <span className="flex items-center gap-1 text-xs text-text-muted">
-            <Clock className="w-3 h-3" />
-            24/7 Trading
-          </span>
-        )}
         {asset.isStablecoin && <Badge variant="neutral">Stablecoin</Badge>}
         {asset.apy && <Badge variant="success">{formatAPY(asset.apy)}</Badge>}
         {asset.apySource && (

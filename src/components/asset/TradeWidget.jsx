@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Clock } from 'lucide-react'
 import Card from '../common/Card'
 import Badge from '../common/Badge'
 import Button from '../common/Button'
@@ -270,7 +271,7 @@ const widgetMap = {
   prediction: PredictionWidget,
 }
 
-export default function TradeWidget({ asset, compact }) {
+export default function TradeWidget({ asset, compact, tradingHours }) {
   const WidgetContent = widgetMap[asset.assetType] || EquityCryptoTokenizedWidget
 
   if (compact) {
@@ -279,9 +280,17 @@ export default function TradeWidget({ asset, compact }) {
 
   return (
     <Card className="w-full">
-      <h3 className="text-sm font-semibold text-text-primary mb-4">
-        {asset.assetType === 'prediction' ? 'Trade' : `Trade ${asset.symbol}`}
-      </h3>
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-sm font-semibold text-text-primary">
+          {asset.assetType === 'prediction' ? 'Trade' : `Trade ${asset.symbol}`}
+        </h3>
+        {tradingHours && (
+          <span className="flex items-center gap-1 text-xs text-text-muted">
+            <Clock className="w-3 h-3" />
+            {tradingHours}
+          </span>
+        )}
+      </div>
       <WidgetContent asset={asset} />
     </Card>
   )

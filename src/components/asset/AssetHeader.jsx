@@ -11,7 +11,7 @@ const typeConfig = {
   futures: { label: 'Futures', variant: 'error' },
 }
 
-export default function AssetHeader({ asset, price, showChange = true, hoveredPrice, hoveredTime }) {
+export default function AssetHeader({ asset, price, showChange = true, hoveredPrice, hoveredTime, actions }) {
   const config = typeConfig[asset.assetType] || typeConfig.equity
   const displayName = asset.title || asset.name
   const isHovering = hoveredPrice != null
@@ -36,6 +36,7 @@ export default function AssetHeader({ asset, price, showChange = true, hoveredPr
             {displayName}
           </h1>
           <Badge variant={config.variant}>{config.label}</Badge>
+          {actions && <div className="ml-auto">{actions}</div>}
         </div>
         {asset.symbol && (
           <p className="text-sm text-text-muted font-mono mt-0.5">

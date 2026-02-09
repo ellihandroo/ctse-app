@@ -10,7 +10,7 @@ import Badge from '../common/Badge'
 import { formatAPY, formatCompact, formatNumber } from '../../utils/formatters'
 import { tokenizedNews } from '../../data/news'
 
-export default function TokenizedDetail({ asset }) {
+export default function TokenizedDetail({ asset, headerActions }) {
   const [hoverInfo, setHoverInfo] = useState(null)
 
   const stats = [
@@ -39,6 +39,7 @@ export default function TokenizedDetail({ asset }) {
         price={asset.tokenPrice}
         hoveredPrice={hoverInfo?.price}
         hoveredTime={hoverInfo?.time}
+        actions={headerActions}
       />
 
       {/* Yield + Chain badges */}

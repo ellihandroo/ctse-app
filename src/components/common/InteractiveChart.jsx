@@ -23,15 +23,15 @@ export default function InteractiveChart({
         fontFamily: 'Inter, sans-serif',
       },
       grid: {
-        vertLines: { visible: pro, color: '#f1f5f9' },
-        horzLines: { visible: pro, color: '#f1f5f9' },
+        vertLines: { visible: false },
+        horzLines: { visible: true, color: '#f1f5f9' },
       },
       rightPriceScale: {
-        visible: pro,
+        visible: true,
         borderVisible: false,
       },
       timeScale: {
-        visible: pro,
+        visible: true,
         borderVisible: false,
       },
       crosshair: {
@@ -39,14 +39,14 @@ export default function InteractiveChart({
           color: '#94a3b8',
           width: 1,
           style: 2,
-          labelVisible: pro,
+          labelVisible: true,
         },
         horzLine: {
-          visible: pro,
+          visible: true,
           color: '#94a3b8',
           width: 1,
           style: 2,
-          labelVisible: pro,
+          labelVisible: true,
         },
       },
       handleScroll: pro,

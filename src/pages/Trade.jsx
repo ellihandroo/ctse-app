@@ -7,6 +7,7 @@ import { generateOrderBook, tradeHistory } from '../data/orderbook'
 import { generateChartData, generateOHLCData } from '../utils/generateChartData'
 import { formatZAR, formatCompact } from '../utils/formatters'
 import InteractiveChart from '../components/common/InteractiveChart'
+import AssetIcon from '../components/common/AssetIcon'
 import PriceChange from '../components/common/PriceChange'
 import OrderBook from '../components/trading/OrderBook'
 import OrderForm from '../components/trading/OrderForm'
@@ -96,11 +97,7 @@ export default function Trade() {
             <ArrowLeft className="w-4 h-4" />
           </button>
           <div className="flex items-center gap-3">
-            <div className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center">
-              <span className="text-xs font-bold text-primary">
-                {(asset.symbol || '??').slice(0, 2)}
-              </span>
-            </div>
+            <AssetIcon symbol={asset.symbol} name={asset.name || asset.title} size="sm" assetType={asset.assetType} />
             <span className="font-semibold text-text-primary text-sm">
               {asset.symbol}
             </span>

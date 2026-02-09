@@ -30,6 +30,7 @@ export default function FuturesDetail({ asset }) {
         price={asset.markPrice}
         hoveredPrice={hoverInfo?.price}
         hoveredTime={hoverInfo?.time}
+        actions={headerActions}
       />
 
       <div className="flex items-center gap-2 flex-wrap">
