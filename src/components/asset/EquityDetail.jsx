@@ -9,7 +9,7 @@ import AnalystRatings from './AnalystRatings'
 import { formatCompact, formatAPY } from '../../utils/formatters'
 import { announcements } from '../../data/corporate'
 
-export default function EquityDetail({ asset }) {
+export default function EquityDetail({ asset, headerActions }) {
   const [hoverInfo, setHoverInfo] = useState(null)
 
   const stats = [
@@ -37,6 +37,7 @@ export default function EquityDetail({ asset }) {
         price={asset.price}
         hoveredPrice={hoverInfo?.price}
         hoveredTime={hoverInfo?.time}
+        actions={headerActions}
       />
       <PriceChart
         sparkline={asset.sparkline}

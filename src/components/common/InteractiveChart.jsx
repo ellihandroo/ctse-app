@@ -5,6 +5,8 @@ export default function InteractiveChart({
   data = [],
   lineColor = '#22c55e',
   height = 300,
+  chartType = 'area',
+  pro = false,
   onCrosshairMove,
 }) {
   const containerRef = useRef(null)
@@ -22,55 +24,79 @@ export default function InteractiveChart({
       },
       grid: {
         vertLines: { visible: false },
-        horzLines: { visible: false },
+        horzLines: { visible: true, color: '#f1f5f9' },
       },
-      rightPriceScale: { visible: false },
+      rightPriceScale: {
+        visible: true,
+        borderVisible: false,
+      },
       timeScale: {
-        visible: false,
+        visible: true,
         borderVisible: false,
       },
       crosshair: {
         vertLine: {
           color: '#94a3b8',
           width: 1,
-          style: 2, // dashed
-          labelVisible: false,
+          style: 2,
+          labelVisible: true,
         },
-        horzLine: { visible: false },
+        horzLine: {
+          visible: true,
+          color: '#94a3b8',
+          width: 1,
+          style: 2,
+          labelVisible: true,
+        },
       },
-      handleScroll: false,
-      handleScale: false,
+      handleScroll: pro,
+      handleScale: pro,
     })
 
-    const areaSeries = chart.addAreaSeries({
-      lineColor,
-      lineWidth: 2,
-      topColor: lineColor + '4D', // 30% opacity
-      bottomColor: lineColor + '00', // transparent
-      crosshairMarkerVisible: true,
-      crosshairMarkerRadius: 5,
-      crosshairMarkerBorderColor: lineColor,
-      crosshairMarkerBackgroundColor: '#ffffff',
-      priceLineVisible: false,
-      lastValueVisible: false,
-    })
+    let primarySeries
 
-    areaSeries.setData(data)
+    if (chartType === 'candlestick') {
+      primarySeries = chart.addCandlestickSeries({
+        upColor: '#22c55e',
+        downColor: '#ef4444',
+        borderUpColor: '#22c55e',
+        borderDownColor: '#ef4444',
+        wickUpColor: '#22c55e',
+        wickDownColor: '#ef4444',
+        priceLineVisible: false,
+        lastValueVisible: false,
+      })
+      primarySeries.setData(data)
+    } else {
+      primarySeries = chart.addAreaSeries({
+        lineColor,
+        lineWidth: 2,
+        topColor: lineColor + '4D',
+        bottomColor: lineColor + '00',
+        crosshairMarkerVisible: true,
+        crosshairMarkerRadius: 5,
+        crosshairMarkerBorderColor: lineColor,
+        crosshairMarkerBackgroundColor: '#ffffff',
+        priceLineVisible: false,
+        lastValueVisible: false,
+      })
+      primarySeries.setData(data)
 
-    // Dotted baseline at first value
-    const baselineValue = data[0].value
-    const baselineSeries = chart.addLineSeries({
-      color: '#94a3b8',
-      lineWidth: 1,
-      lineStyle: 1, // dotted
-      priceLineVisible: false,
-      lastValueVisible: false,
-      crosshairMarkerVisible: false,
-    })
-    baselineSeries.setData([
-      { time: data[0].time, value: baselineValue },
-      { time: data[data.length - 1].time, value: baselineValue },
-    ])
+      // Dotted baseline at first value
+      const baselineValue = data[0].value
+      const baselineSeries = chart.addLineSeries({
+        color: '#94a3b8',
+        lineWidth: 1,
+        lineStyle: 1,
+        priceLineVisible: false,
+        lastValueVisible: false,
+        crosshairMarkerVisible: false,
+      })
+      baselineSeries.setData([
+        { time: data[0].time, value: baselineValue },
+        { time: data[data.length - 1].time, value: baselineValue },
+      ])
+    }
 
     chart.timeScale().fitContent()
 
@@ -80,7 +106,8 @@ export default function InteractiveChart({
           onCrosshairMove(null)
           return
         }
-        const value = param.seriesData.get(areaSeries)?.value
+        const seriesData = param.seriesData.get(primarySeries)
+        const value = seriesData?.value ?? seriesData?.close
         if (value != null) {
           onCrosshairMove({ time: param.time, value })
         }
@@ -100,7 +127,7 @@ export default function InteractiveChart({
       chart.remove()
       chartRef.current = null
     }
-  }, [data, lineColor, height, onCrosshairMove])
+  }, [data, lineColor, height, chartType, pro, onCrosshairMove])
 
   return <div ref={containerRef} className="w-full" />
 }

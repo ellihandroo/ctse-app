@@ -4,6 +4,7 @@ import Card from '../common/Card'
 import Badge from '../common/Badge'
 import PriceChange from '../common/PriceChange'
 import Sparkline from '../common/Sparkline'
+import AssetIcon from '../common/AssetIcon'
 import { formatZAR, formatAPY, formatCompact, formatNumber } from '../../utils/formatters'
 
 function daysUntil(dateStr) {
@@ -19,16 +20,6 @@ const typeConfig = {
   crypto: { label: 'Crypto', variant: 'dark' },
   prediction: { label: 'Prediction', variant: 'warning' },
   futures: { label: 'Futures', variant: 'error' },
-}
-
-function getInitials(name) {
-  if (!name) return '??'
-  return name
-    .split(' ')
-    .map((w) => w[0])
-    .join('')
-    .slice(0, 2)
-    .toUpperCase()
 }
 
 function getPrice(asset) {
@@ -72,11 +63,7 @@ export default function AssetCard({ asset }) {
     >
       {/* Top row: icon + name + type badge */}
       <div className="flex items-start gap-3">
-        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-          <span className="text-sm font-semibold text-primary">
-            {getInitials(asset.name || asset.title)}
-          </span>
-        </div>
+        <AssetIcon symbol={symbol} name={asset.name || asset.title} size="lg" assetType={asset.assetType} />
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
             <span className="font-semibold text-text-primary truncate">

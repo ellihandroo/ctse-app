@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useParams, useNavigate } from 'react-router-dom'
-import { ArrowLeft, X } from 'lucide-react'
+import { X, Maximize2 } from 'lucide-react'
 import { findAssetById } from '../data/allAssets'
 import Button from '../components/common/Button'
 import TradeWidget from '../components/asset/TradeWidget'
@@ -76,28 +76,32 @@ export default function AssetDetail() {
 
   const DetailComponent = detailComponents[asset.assetType] || EquityDetail
   const price = getPrice(asset)
+  const showAdvanced = asset.assetType !== 'prediction'
+
+  const is247 = asset.assetType === 'crypto' && !asset.isStablecoin
+
+  const headerActions = showAdvanced ? (
+    <button
+      onClick={() => navigate(`/trade/${id}`)}
+      className="flex items-center gap-1.5 px-2.5 py-1 text-xs text-text-secondary hover:text-text-primary border border-border rounded-lg hover:bg-surface transition-colors"
+    >
+      <Maximize2 className="w-3.5 h-3.5" />
+      Advanced
+    </button>
+  ) : null
 
   return (
     <div className="max-w-6xl">
-      {/* Back button */}
-      <button
-        onClick={() => navigate(-1)}
-        className="flex items-center gap-1.5 text-sm text-text-secondary hover:text-text-primary transition-colors mb-6"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Back
-      </button>
-
       <div className="lg:flex lg:gap-6">
         {/* Left column — asset details */}
         <div className="flex-1 min-w-0 pb-24 lg:pb-0">
-          <DetailComponent asset={asset} />
+          <DetailComponent asset={asset} headerActions={headerActions} />
         </div>
 
         {/* Right column — sticky trade widget (desktop only) */}
         <div className="hidden lg:block w-[360px] flex-shrink-0">
           <div className="sticky" style={{ top: '5.5rem' }}>
-            <TradeWidget asset={asset} />
+            <TradeWidget asset={asset} tradingHours={is247 ? '24/7' : null} />
           </div>
         </div>
       </div>

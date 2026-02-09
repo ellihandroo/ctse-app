@@ -11,11 +11,7 @@ export default function OrderForm({ asset, currentPrice }) {
   const isBuy = side === 'buy'
 
   return (
-    <div className="h-full flex flex-col">
-      <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
-        Place Order
-      </h3>
-
+    <div className="flex flex-col">
       {/* Order type tabs */}
       <div className="flex gap-1 mb-3">
         {['limit', 'market'].map((type) => (
@@ -24,8 +20,8 @@ export default function OrderForm({ asset, currentPrice }) {
             onClick={() => setOrderType(type)}
             className={`flex-1 py-1.5 text-xs font-medium rounded capitalize transition-colors ${
               orderType === type
-                ? 'bg-dark-border text-white'
-                : 'text-gray-500 hover:text-gray-300'
+                ? 'bg-surface text-text-primary'
+                : 'text-text-muted hover:text-text-secondary'
             }`}
           >
             {type}
@@ -39,8 +35,8 @@ export default function OrderForm({ asset, currentPrice }) {
           onClick={() => setSide('buy')}
           className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-colors ${
             isBuy
-              ? 'bg-green-500 text-white'
-              : 'bg-dark-border text-gray-400 hover:text-gray-200'
+              ? 'bg-primary text-white'
+              : 'bg-surface text-text-muted hover:text-text-secondary'
           }`}
         >
           Buy
@@ -49,8 +45,8 @@ export default function OrderForm({ asset, currentPrice }) {
           onClick={() => setSide('sell')}
           className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-colors ${
             !isBuy
-              ? 'bg-red-500 text-white'
-              : 'bg-dark-border text-gray-400 hover:text-gray-200'
+              ? 'bg-error text-white'
+              : 'bg-surface text-text-muted hover:text-text-secondary'
           }`}
         >
           Sell
@@ -60,25 +56,25 @@ export default function OrderForm({ asset, currentPrice }) {
       {/* Price input (limit only) */}
       {orderType === 'limit' && (
         <div className="mb-3">
-          <label className="text-xs text-gray-500 mb-1 block">Price (ZAR)</label>
+          <label className="text-xs text-text-muted mb-1 block">Price (ZAR)</label>
           <input
             type="number"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
-            className="w-full bg-dark-border border border-dark-border rounded-lg px-3 py-2 text-sm text-white font-mono focus:outline-none focus:border-primary/50"
+            className="w-full bg-white border border-border rounded-lg px-3 py-2 text-sm text-text-primary font-mono focus:outline-none focus:border-primary/50"
           />
         </div>
       )}
 
       {/* Amount input */}
       <div className="mb-3">
-        <label className="text-xs text-gray-500 mb-1 block">Amount</label>
+        <label className="text-xs text-text-muted mb-1 block">Amount</label>
         <input
           type="number"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
           placeholder="0.00"
-          className="w-full bg-dark-border border border-dark-border rounded-lg px-3 py-2 text-sm text-white font-mono focus:outline-none focus:border-primary/50"
+          className="w-full bg-white border border-border rounded-lg px-3 py-2 text-sm text-text-primary font-mono focus:outline-none focus:border-primary/50"
         />
       </div>
 
@@ -87,7 +83,7 @@ export default function OrderForm({ asset, currentPrice }) {
         {['25%', '50%', '75%', '100%'].map((pct) => (
           <button
             key={pct}
-            className="flex-1 py-1 text-xs text-gray-500 bg-dark-border rounded hover:text-gray-300 transition-colors"
+            className="flex-1 py-1 text-xs text-text-secondary bg-surface rounded hover:bg-border transition-colors"
           >
             {pct}
           </button>
@@ -95,9 +91,9 @@ export default function OrderForm({ asset, currentPrice }) {
       </div>
 
       {/* Total */}
-      <div className="flex justify-between text-sm mb-4 py-2 border-t border-dark-border">
-        <span className="text-gray-500">Total</span>
-        <span className="text-white font-mono font-medium">
+      <div className="flex justify-between text-sm mb-4 py-2 border-t border-border">
+        <span className="text-text-muted">Total</span>
+        <span className="text-text-primary font-mono font-medium">
           {total > 0 ? formatZAR(total) : '-'}
         </span>
       </div>
@@ -106,11 +102,11 @@ export default function OrderForm({ asset, currentPrice }) {
       <button
         className={`w-full py-3 rounded-lg text-sm font-semibold transition-colors ${
           isBuy
-            ? 'bg-green-500 hover:bg-green-600 text-white'
-            : 'bg-red-500 hover:bg-red-600 text-white'
+            ? 'bg-primary hover:bg-primary-hover text-white'
+            : 'bg-error hover:bg-red-600 text-white'
         }`}
       >
-        {isBuy ? 'Buy' : 'Sell'} {asset?.symbol || ''}
+        Review Order
       </button>
     </div>
   )
