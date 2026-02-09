@@ -97,7 +97,7 @@ function CuratedRow({ asset }) {
         ) : (
           <>
             <p className="text-sm font-mono font-medium text-text-primary">
-              {formatZAR(price)}
+              R {formatCompact(price)}
             </p>
             <PriceChange change={asset.change24h ?? 0} size="sm" />
           </>
@@ -107,9 +107,9 @@ function CuratedRow({ asset }) {
   )
 }
 
-function CuratedSection({ title, icon: Icon, items, metric }) {
+function CuratedSection({ title, icon: Icon, items }) {
   return (
-    <div className="bg-white border border-border rounded-xl p-4">
+    <div className="bg-white border border-border rounded-xl p-3 min-w-[220px] flex-shrink-0 md:min-w-0 md:flex-shrink">
       <div className="flex items-center gap-2 mb-2">
         <Icon className="w-4 h-4 text-primary" />
         <h3 className="text-sm font-semibold text-text-primary">{title}</h3>
@@ -153,8 +153,8 @@ export default function Marketplace() {
         </div>
       </div>
 
-      {/* Curated sections */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {/* Curated sections — horizontal scroll on mobile, grid on desktop */}
+      <div className="flex gap-3 overflow-x-auto scrollbar-none md:grid md:grid-cols-3 md:overflow-visible">
         <CuratedSection
           title="Top Gainers (24H)"
           icon={TrendingUp}

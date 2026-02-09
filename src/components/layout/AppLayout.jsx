@@ -8,12 +8,12 @@ export default function AppLayout() {
   const location = useLocation()
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pt-16 overflow-x-hidden">
       <Navbar />
       {location.pathname === '/marketplace' && <MarketTicker />}
       <div className="flex">
         <Sidebar />
-        <main className="flex-1 p-4 md:p-6 pb-20 lg:pb-6">
+        <main className="flex-1 min-w-0 p-4 md:p-6 pb-20 lg:pb-6">
           <div key={location.pathname} className="animate-fade-in">
             <Outlet />
           </div>

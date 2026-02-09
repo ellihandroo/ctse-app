@@ -140,9 +140,9 @@ export default function AssetCard({ asset }) {
       ) : (
         <>
           {/* Price row + sparkline */}
-          <div className="flex items-end justify-between">
-            <div>
-              <p className="text-lg font-semibold font-mono text-text-primary">
+          <div className="flex items-end justify-between gap-2">
+            <div className="min-w-0">
+              <p className="text-lg font-semibold font-mono text-text-primary truncate">
                 {formatZAR(price)}
               </p>
               <PriceChange change={change} />

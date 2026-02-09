@@ -37,7 +37,7 @@ export default function Navbar() {
   }, [])
 
   return (
-    <nav className="h-16 bg-white border-b border-border px-4 flex items-center justify-between sticky top-0 z-40">
+    <nav className="h-16 bg-white border-b border-border px-4 flex items-center justify-between fixed top-0 left-0 right-0 z-40">
       {/* Left: Logo */}
       <div className="flex items-center gap-3">
         <img
@@ -75,7 +75,7 @@ export default function Navbar() {
           </button>
 
           {showNotifs && (
-            <div className="absolute right-0 top-full mt-2 w-80 bg-white border border-border rounded-xl shadow-lg z-50">
+            <div className="absolute right-0 top-full mt-2 w-[calc(100vw-2rem)] sm:w-80 max-w-80 bg-white border border-border rounded-xl shadow-lg z-50">
               <div className="flex items-center justify-between px-4 py-3 border-b border-border">
                 <span className="text-sm font-semibold text-text-primary">Notifications</span>
                 {unreadCount > 0 && (
@@ -117,16 +117,16 @@ export default function Navbar() {
         {/* Wallet dropdown */}
         <div className="relative" ref={walletRef}>
           <button
-            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 border border-primary bg-primary-light text-primary rounded-lg text-sm font-medium hover:bg-primary/10 transition-colors"
+            className="flex items-center gap-1.5 px-2 sm:px-3 py-1.5 border border-primary bg-primary-light text-primary rounded-lg text-sm font-medium hover:bg-primary/10 transition-colors"
             onClick={() => { setShowWallet((prev) => !prev); setShowNotifs(false) }}
           >
             <Wallet className="w-4 h-4" />
-            <span className="font-mono">{formatZAR(totalBalance)}</span>
-            <ChevronDown className={`w-3.5 h-3.5 transition-transform ${showWallet ? 'rotate-180' : ''}`} />
+            <span className="font-mono hidden sm:inline">{formatZAR(totalBalance)}</span>
+            <ChevronDown className={`w-3.5 h-3.5 hidden sm:block transition-transform ${showWallet ? 'rotate-180' : ''}`} />
           </button>
 
           {showWallet && (
-            <div className="absolute right-0 top-full mt-2 w-72 bg-white border border-border rounded-xl shadow-lg z-50">
+            <div className="absolute right-0 top-full mt-2 w-[calc(100vw-2rem)] sm:w-72 max-w-72 bg-white border border-border rounded-xl shadow-lg z-50">
               {/* Broker wallet */}
               <div className="p-4 border-b border-border">
                 <div className="flex items-center justify-between mb-2">
