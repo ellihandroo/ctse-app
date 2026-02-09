@@ -1,17 +1,24 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import Card from '../common/Card'
 import Badge from '../common/Badge'
 import Button from '../common/Button'
 import { formatZAR } from '../../utils/formatters'
 
 function EquityCryptoTokenizedWidget({ asset }) {
-  const navigate = useNavigate()
   const [tab, setTab] = useState('buy')
   const [amount, setAmount] = useState('')
+  const [confirmed, setConfirmed] = useState(false)
 
   const price = asset.tokenPrice || asset.price
   const shares = amount ? (parseFloat(amount) / price).toFixed(4) : '0'
+
+  const handleSubmit = () => {
+    setConfirmed(true)
+    setTimeout(() => {
+      setConfirmed(false)
+      setAmount('')
+    }, 2000)
+  }
 
   return (
     <>
@@ -65,22 +72,36 @@ function EquityCryptoTokenizedWidget({ asset }) {
         <span className="font-mono font-medium text-text-primary">{formatZAR(price)}</span>
       </div>
 
-      <Button
-        variant={tab === 'buy' ? 'primary' : 'secondary'}
-        size="lg"
-        className="w-full"
-        onClick={() => navigate(`/trade/${asset.id}`)}
-      >
-        Review {tab === 'buy' ? 'Buy' : 'Sell'} Order
-      </Button>
+      {confirmed ? (
+        <div className="w-full py-3 rounded-xl bg-primary/10 text-primary text-sm font-semibold text-center">
+          Order placed!
+        </div>
+      ) : (
+        <Button
+          variant={tab === 'buy' ? 'primary' : 'secondary'}
+          size="lg"
+          className="w-full"
+          onClick={handleSubmit}
+        >
+          {tab === 'buy' ? 'Buy' : 'Sell'} {asset.symbol}
+        </Button>
+      )}
     </>
   )
 }
 
 function FuturesWidget({ asset }) {
-  const navigate = useNavigate()
   const [tab, setTab] = useState('long')
   const [amount, setAmount] = useState('')
+  const [confirmed, setConfirmed] = useState(false)
+
+  const handleSubmit = () => {
+    setConfirmed(true)
+    setTimeout(() => {
+      setConfirmed(false)
+      setAmount('')
+    }, 2000)
+  }
 
   return (
     <>
@@ -134,14 +155,20 @@ function FuturesWidget({ asset }) {
         <span className="font-mono font-medium text-text-primary">{formatZAR(asset.markPrice)}</span>
       </div>
 
-      <Button
-        variant={tab === 'long' ? 'success' : 'danger'}
-        size="lg"
-        className="w-full"
-        onClick={() => navigate(`/trade/${asset.id}`)}
-      >
-        {tab === 'long' ? 'Long' : 'Short'} {asset.symbol}
-      </Button>
+      {confirmed ? (
+        <div className="w-full py-3 rounded-xl bg-primary/10 text-primary text-sm font-semibold text-center">
+          Order placed!
+        </div>
+      ) : (
+        <Button
+          variant={tab === 'long' ? 'success' : 'danger'}
+          size="lg"
+          className="w-full"
+          onClick={handleSubmit}
+        >
+          {tab === 'long' ? 'Long' : 'Short'} {asset.symbol}
+        </Button>
+      )}
     </>
   )
 }

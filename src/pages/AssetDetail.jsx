@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useParams, useNavigate } from 'react-router-dom'
-import { ArrowLeft, X } from 'lucide-react'
+import { ArrowLeft, X, Maximize2 } from 'lucide-react'
 import { findAssetById } from '../data/allAssets'
 import Button from '../components/common/Button'
 import TradeWidget from '../components/asset/TradeWidget'
@@ -76,17 +76,30 @@ export default function AssetDetail() {
 
   const DetailComponent = detailComponents[asset.assetType] || EquityDetail
   const price = getPrice(asset)
+  const showAdvanced = asset.assetType !== 'prediction'
 
   return (
     <div className="max-w-6xl">
-      {/* Back button */}
-      <button
-        onClick={() => navigate(-1)}
-        className="flex items-center gap-1.5 text-sm text-text-secondary hover:text-text-primary transition-colors mb-6"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Back
-      </button>
+      {/* Top bar: Back + Advanced */}
+      <div className="flex items-center justify-between mb-6">
+        <button
+          onClick={() => navigate(-1)}
+          className="flex items-center gap-1.5 text-sm text-text-secondary hover:text-text-primary transition-colors"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back
+        </button>
+
+        {showAdvanced && (
+          <button
+            onClick={() => navigate(`/trade/${id}`)}
+            className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-text-secondary hover:text-text-primary border border-border rounded-lg hover:bg-surface transition-colors"
+          >
+            <Maximize2 className="w-4 h-4" />
+            Advanced
+          </button>
+        )}
+      </div>
 
       <div className="lg:flex lg:gap-6">
         {/* Left column — asset details */}

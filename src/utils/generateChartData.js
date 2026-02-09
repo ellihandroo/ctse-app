@@ -74,6 +74,79 @@ export function generateChartData(sparkline, timeframe, currentPrice, assetId) {
   })
 }
 
+const CANDLE_COUNTS = {
+  '1D': 48,
+  '1W': 28,
+  '1M': 30,
+  '3M': 60,
+  '1Y': 52,
+  'ALL': 60,
+}
+
+/**
+ * Generates realistic OHLC candlestick data directly from sparkline.
+ * Each candle has a meaningful body (1-3% of price) and wicks.
+ */
+export function generateOHLCData(sparkline, timeframe, currentPrice, assetId) {
+  const count = CANDLE_COUNTS[timeframe] || 30
+  const rand = seededRandom(hashString(assetId + timeframe + 'ohlc'))
+
+  if (!sparkline || sparkline.length < 2) {
+    return Array.from({ length: count }, (_, i) => ({
+      time: i,
+      open: currentPrice,
+      high: currentPrice,
+      low: currentPrice,
+      close: currentPrice,
+    }))
+  }
+
+  // Interpolate close prices along the sparkline
+  const closes = []
+  const segLen = (count - 1) / (sparkline.length - 1)
+  for (let i = 0; i < count; i++) {
+    const seg = i / segLen
+    const lo = Math.floor(seg)
+    const hi = Math.min(lo + 1, sparkline.length - 1)
+    const t = seg - lo
+    closes.push(sparkline[lo] + (sparkline[hi] - sparkline[lo]) * t)
+  }
+
+  // Adjust so last close matches currentPrice
+  const lastClose = closes[closes.length - 1]
+  const adj = currentPrice - lastClose
+  const adjusted = closes.map((c, i) => c + adj * (i / (count - 1)))
+
+  // Generate timestamps
+  const interval = getInterval(timeframe)
+  const candleInterval = Math.max(interval, Math.floor((count > 1 ? interval * (TIMEFRAME_POINTS[timeframe] || 30) / count : interval)))
+  const now = new Date()
+
+  return adjusted.map((close, i) => {
+    const date = new Date(now)
+    date.setMinutes(date.getMinutes() - (count - 1 - i) * candleInterval)
+    const time = Math.floor(date.getTime() / 1000)
+
+    // Body: open differs from close by 0.5-2%
+    const bodyPct = (rand() * 0.015 + 0.005) * (rand() > 0.5 ? 1 : -1)
+    const open = close * (1 + bodyPct)
+
+    // Wicks extend beyond body by 0.2-1%
+    const highBody = Math.max(open, close)
+    const lowBody = Math.min(open, close)
+    const wickUp = highBody * (1 + rand() * 0.008 + 0.002)
+    const wickDown = lowBody * (1 - rand() * 0.008 - 0.002)
+
+    return {
+      time,
+      open: Math.round(open * 100) / 100,
+      high: Math.round(wickUp * 100) / 100,
+      low: Math.round(wickDown * 100) / 100,
+      close: Math.round(close * 100) / 100,
+    }
+  })
+}
+
 function getInterval(timeframe) {
   switch (timeframe) {
     case '1D': return 5        // 5 min
